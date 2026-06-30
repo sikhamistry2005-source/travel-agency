@@ -1800,41 +1800,85 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
    HERO PRICE BADGE
    ================================================================ */
 .hero-badge-container {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: fadeInDown 1s ease forwards;
+  animation: fadeInDown 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hero-price-badge {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 215, 0, 0.25);
-  color: #fff;
-  padding: 8px 18px;
-  border-radius: 50px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 0 15px rgba(255, 215, 0, 0.05);
-  transition: all 0.3s ease;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 6px 6px 6px 18px;
+  border-radius: 50px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 25px rgba(255, 215, 0, 0.08);
+  gap: 12px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-price-badge:hover {
-  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-3px) scale(1.02);
   border-color: var(--yellow);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 35px rgba(0,0,0,0.2), 0 0 20px rgba(255, 215, 0, 0.15);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.4), 0 0 30px rgba(255, 215, 0, 0.2);
 }
 
-.hero-price-badge::before {
+.hero-price-badge .badge-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-price-badge .badge-tag::before {
   content: '🏷️';
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+}
+
+.hero-price-badge .badge-tag::after {
+  content: "•";
+  margin-left: 12px;
+  color: rgba(255, 215, 0, 0.6);
+  display: inline-block;
+}
+
+.hero-price-badge .badge-price {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--yellow) 0%, #d4af37 100%);
+  color: #111;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.25);
+}
+
+.hero-price-badge .price-lbl {
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.hero-price-badge .price-val-hero {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.hero-price-badge .price-unit-hero {
+  font-size: 0.72rem;
+  opacity: 0.85;
+  font-weight: 500;
 }
 
 

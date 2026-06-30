@@ -5,6 +5,9 @@
 window.SR_TRANSLATIONS = {
 
   en: {
+    hero_price_badge_tag: 'Special Offer',
+    hero_price_badge_lbl: 'Starting from',
+    hero_price_badge_unit: '/ person',
     hero_price_badge: 'Packages Start from ₹4,999/person',
     top_banner_badge: 'Special Offer',
     top_banner_text: 'Andaman Holiday Packages Starting from Just ₹4,999/person!',
@@ -122,6 +125,9 @@ window.SR_TRANSLATIONS = {
   },
 
   hi: {
+    hero_price_badge_tag: 'विशेष ऑफर',
+    hero_price_badge_lbl: 'शुरू मात्र',
+    hero_price_badge_unit: '/ व्यक्ति',
     hero_price_badge: 'पैकेज मात्र ₹4,999/व्यक्ति से शुरू',
     top_banner_badge: 'विशेष ऑफर',
     top_banner_text: 'अंडमान हॉलिडे पैकेज मात्र ₹4,999/व्यक्ति से शुरू!',
@@ -239,6 +245,9 @@ window.SR_TRANSLATIONS = {
   },
 
   bn: {
+    hero_price_badge_tag: 'বিশেষ অফার',
+    hero_price_badge_lbl: 'শুরু মাত্র',
+    hero_price_badge_unit: '/ জন',
     hero_price_badge: 'প্যাকেজ মাত্র ₹৪,৯৯৯/জন থেকে শুরু',
     top_banner_badge: 'বিশেষ অফার',
     top_banner_text: 'আন্দামান হলিডে প্যাকেজ মাত্র ₹৪,৯৯৯/জন থেকে শুরু!',
@@ -356,6 +365,9 @@ window.SR_TRANSLATIONS = {
   },
 
   ta: {
+    hero_price_badge_tag: 'சிறப்பு சலுகை',
+    hero_price_badge_lbl: 'தொடக்கம் வெறும்',
+    hero_price_badge_unit: '/ நபருக்கு',
     hero_price_badge: 'பேக்கேஜ்கள் வெறும் ₹4,999/நபருக்கு முதல்',
     top_banner_badge: 'சிறப்பு சலுகை',
     top_banner_text: 'அந்தமான் சுற்றுலா பேக்கேஜ்கள் வெறும் ₹4,999/நபருக்கு முதல்!',
@@ -473,6 +485,9 @@ window.SR_TRANSLATIONS = {
   },
 
   te: {
+    hero_price_badge_tag: 'ప్రత్యేక ఆఫర్',
+    hero_price_badge_lbl: 'ప్రారంభం కేవలం',
+    hero_price_badge_unit: '/ వ్యక్తికి',
     hero_price_badge: 'ప్యాకేజీలు కేవలం ₹4,999/వ్యక్తి నుండి ప్రారంభం',
     top_banner_badge: 'ప్రత్యేక ఆఫర్',
     top_banner_text: 'అండమాన్ హాలిడే ప్యాకేజీలు కేవలం ₹4,999/వ్యక్తి నుండి ప్రారంభం!',
@@ -590,6 +605,9 @@ window.SR_TRANSLATIONS = {
   },
 
   es: {
+    hero_price_badge_tag: 'Oferta Especial',
+    hero_price_badge_lbl: 'Desde solo',
+    hero_price_badge_unit: '/ persona',
     hero_price_badge: 'Paquetes desde solo ₹4,999/persona',
     top_banner_badge: 'Oferta Especial',
     top_banner_text: '¡Paquetes vacacionales en Andamán desde solo ₹4,999/persona!',
@@ -707,6 +725,9 @@ window.SR_TRANSLATIONS = {
   },
 
   fr: {
+    hero_price_badge_tag: 'Offre Spéciale',
+    hero_price_badge_lbl: 'À partir de',
+    hero_price_badge_unit: '/ personne',
     hero_price_badge: 'Forfaits à partir de ₹4,999/personne',
     top_banner_badge: 'Offre Spéciale',
     top_banner_text: 'Formules de vacances aux îles Andaman à partir de ₹4,999/personne !',
@@ -824,6 +845,9 @@ window.SR_TRANSLATIONS = {
   },
 
   de: {
+    hero_price_badge_tag: 'Sonderangebot',
+    hero_price_badge_lbl: 'Ab nur',
+    hero_price_badge_unit: '/ Person',
     hero_price_badge: 'Pakete ab nur ₹4.999/Person',
     top_banner_badge: 'Sonderangebot',
     top_banner_text: 'Urlaubspakete für die Andamanen ab nur ₹4.999/Person!',
@@ -941,6 +965,9 @@ window.SR_TRANSLATIONS = {
   },
 
   ar: {
+    hero_price_badge_tag: 'عرض خاص',
+    hero_price_badge_lbl: 'يبدأ من',
+    hero_price_badge_unit: '/ للشخص',
     hero_price_badge: 'الباقات تبدأ من 4,999 روبية للشخص الواحد',
     top_banner_badge: 'عرض خاص',
     top_banner_text: 'عروض عطلات أندامان تبدأ من 4,999 روبية/الشخص فقط!',
@@ -1058,6 +1085,9 @@ window.SR_TRANSLATIONS = {
   },
 
   zh: {
+    hero_price_badge_tag: '特别优惠',
+    hero_price_badge_lbl: '仅从',
+    hero_price_badge_unit: '/ 人',
     hero_price_badge: '套票仅从 ₹4,999/人起',
     top_banner_badge: '特别优惠',
     top_banner_text: '安达曼假期套票仅从 ₹4,999/人起！',
