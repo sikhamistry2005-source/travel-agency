@@ -1796,4 +1796,45 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
   }
 }
 
+/* ================================================================
+   HERO PRICE BADGE
+   ================================================================ */
+.hero-badge-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInDown 1s ease forwards;
+}
+
+.hero-price-badge {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 0 15px rgba(255, 215, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.hero-price-badge:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--yellow);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.2), 0 0 20px rgba(255, 215, 0, 0.15);
+}
+
+.hero-price-badge::before {
+  content: '🏷️';
+  font-size: 0.95rem;
+}
+
 
