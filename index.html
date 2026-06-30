@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Seven Rays Travel Agency — Luxury travel experiences in Andaman & Goa. AI-powered trip planning, custom packages and premium adventures." />
-  <title>Seven Rays Travel Agency — Luxury Andaman & Goa Experiences</title>
+  <meta name="description" content="Seven Rays Travel Agency — Luxury travel experiences in Andaman. AI-powered trip planning, custom packages and premium adventures." />
+  <title>Seven Rays Travel Agency — Premium Andaman Travel Experiences</title>
 
   <!-- ❗ Dark mode — must run BEFORE CSS to prevent flash -->
   <script>
@@ -23,15 +23,20 @@
 </head>
 <body>
 
+<!-- TOP ANNOUNCEMENT BANNER -->
+<div class="top-banner">
+  <div class="container top-banner-container">
+    <span class="top-banner-badge" data-i18n="top_banner_badge">Special Offer</span>
+    <span class="banner-text" data-i18n="top_banner_text">Andaman Holiday Packages Starting from Just ₹4,999/person!</span>
+    <a href="#packages" class="banner-link" data-i18n="top_banner_cta">Explore Now &rarr;</a>
+  </div>
+</div>
+
 <!-- ===== NAVBAR ===== -->
 <nav id="navbar">
   <div class="nav-container">
     <a href="#" class="nav-logo">
-      <div class="logo-mark">
-        <span class="logo-block"></span>
-        <span class="logo-7">7</span>
-        <span class="logo-r">R</span>
-      </div>
+      <img src="images/SevenRayslogo.jpg" alt="Seven Rays Travel Agency" class="logo-img">
       <div class="logo-text">
         <span class="logo-name">Seven Rays</span>
         <span class="logo-sub">Travel Agency.</span>
@@ -68,6 +73,14 @@
           <button class="lang-opt" data-lang="zh">🇨🇳 中文</button>
         </div>
       </div>
+
+      <!-- Admin Portal Lock Icon -->
+      <button class="theme-toggle" id="adminPortalToggle" aria-label="Admin Portal" onclick="window.openAdminLoginModal()" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);color:var(--text-1);cursor:pointer;transition:all var(--tr);margin-right:8px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </button>
 
       <!-- Dark Mode Toggle -->
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
@@ -113,7 +126,7 @@
       <span class="hl" id="hLine1" data-i18n="hero_h1">Craft Your</span>
       <span class="hl italic" id="hLine2" data-i18n="hero_h2">Perfect Escape</span>
     </h1>
-    <p class="hero-sub" id="heroSub" data-i18n="hero_sub">Luxury travel experiences tailored just for you —<br>Andaman &amp; Goa await.</p>
+    <p class="hero-sub" id="heroSub" data-i18n="hero_sub">Luxury travel experiences tailored just for you —<br>Andaman awaits.</p>
     <div class="hero-ctas" id="heroCtas">
       <a href="#packages" class="btn btn-primary" data-i18n="btn_explore">Explore Packages</a>
       <a href="#builder" class="btn btn-glass" data-i18n="btn_customize_trip">Customize Your Trip</a>
@@ -148,11 +161,11 @@
     <div class="section-header" data-animate>
       <span class="section-eyebrow" data-i18n="dest_eyebrow">Where We Take You</span>
       <h2 class="section-title" data-i18n="dest_title">Dream Destinations</h2>
-      <p class="section-subtitle" data-i18n="dest_sub">From pristine Andaman shores to vibrant Goa beaches — every destination tells a story.</p>
+      <p class="section-subtitle" data-i18n="dest_sub">From pristine shores to stunning sunset points — every destination in Andaman tells a story.</p>
     </div>
     <div class="destinations-grid">
-      <!-- Port Blair: striking coastal/harbor aerial -->
-      <div class="dest-card dest-card--large" data-animate data-delay="0">
+      <!-- Port Blair -->
+      <div class="dest-card" data-animate data-delay="0">
         <div class="dest-img" data-img="dest-port-blair" style="background-image:url('https://images.unsplash.com/photo-1590123715937-29a7ddd2e52c?auto=format&fit=crop&w=1200&q=90')"></div>
         <div class="dest-overlay"><div class="dest-info"><span class="dest-tag">Andaman &amp; Nicobar</span><h3>Port Blair</h3><p>The gateway to paradise — colonial history meets endless turquoise waters.</p><a href="#builder" class="dest-link">Plan Your Trip <span>→</span></a></div></div>
       </div>
@@ -166,16 +179,6 @@
         <div class="dest-img" data-img="dest-neil" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=90')"></div>
         <div class="dest-overlay"><div class="dest-info"><span class="dest-tag">Andaman</span><h3>Neil Island</h3><p>Untouched serenity and the most surreal sunsets.</p><a href="#builder" class="dest-link" data-i18n="btn_plan_trip">Plan Your Trip <span>→</span></a></div></div>
       </div>
-      <!-- North Goa: vibrant beach -->
-      <div class="dest-card" data-animate data-delay="100">
-        <div class="dest-img" data-img="dest-north-goa" style="background-image:url('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=90')"></div>
-        <div class="dest-overlay"><div class="dest-info"><span class="dest-tag">Goa</span><h3>North Goa</h3><p>Vibrant nightlife, iconic beach parties, buzzing shacks.</p><a href="#builder" class="dest-link" data-i18n="btn_plan_trip">Plan Your Trip <span>→</span></a></div></div>
-      </div>
-      <!-- South Goa: quiet luxury -->
-      <div class="dest-card" data-animate data-delay="200">
-        <div class="dest-img" data-img="dest-south-goa" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=90')"></div>
-        <div class="dest-overlay"><div class="dest-info"><span class="dest-tag">Goa</span><h3>South Goa</h3><p>Quiet luxury, pristine beaches, unhurried living.</p><a href="#builder" class="dest-link" data-i18n="btn_plan_trip">Plan Your Trip <span>→</span></a></div></div>
-      </div>
     </div>
   </div>
 </section>
@@ -187,18 +190,292 @@
       <span class="section-eyebrow eyebrow--yellow" data-i18n="pkg_eyebrow">Handcrafted For You</span>
       <h2 class="section-title title--light" data-i18n="pkg_title">Premium Packages</h2>
       <p class="section-subtitle subtitle--light" data-i18n="pkg_sub">Every package is thoughtfully designed to create memories that last a lifetime.</p>
+      <div class="pkg-starts-badge" data-i18n="pkg_starts_badge">Andaman Packages Start from ₹4,999/person</div>
     </div>
-    <div class="packages-grid">
-      <div class="pkg-card" data-animate data-delay="0"><div class="pkg-img" data-img="pkg-honeymoon" style="background-image:url('https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=800&q=90')"><span class="pkg-badge badge--rose">Most Popular</span></div><div class="pkg-body"><div class="pkg-meta"><span class="pkg-duration">⏱ 5D / 4N</span><span class="pkg-dest">📍 Andaman</span></div><h3 class="pkg-title">Honeymoon Escape</h3><ul class="pkg-highlights"><li>Radhanagar Beach sunset walk</li><li>Candlelight dinner by the shore</li><li>Couple's spa &amp; snorkeling</li><li>Private villa accommodation</li></ul><div class="pkg-footer"><div class="pkg-price"><span class="price-from" data-i18n="price_from">Starting from</span><span class="price-value" data-price-inr="45000">₹45,000<small>/couple</small></span></div><button class="btn btn-pkg" data-i18n="btn_view_details" onclick="openPackageModal('honeymoon')">View Details</button></div></div></div>
+    <div class="packages-slider-container">
+      <button class="slider-btn prev-btn" aria-label="Previous Package" onclick="window.scrollPackages(-1)">‹</button>
+      <div class="packages-grid">
 
-      <div class="pkg-card" data-animate data-delay="100"><div class="pkg-img" data-img="pkg-luxury" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=90')"><span class="pkg-badge badge--gold">Luxury</span></div><div class="pkg-body"><div class="pkg-meta"><span class="pkg-duration">⏱ 7D / 6N</span><span class="pkg-dest">📍 Andaman + Goa</span></div><h3 class="pkg-title">Luxury Island Retreat</h3><ul class="pkg-highlights"><li>Private villa with ocean view</li><li>Scuba &amp; island hopping</li><li>Gourmet dining experiences</li><li>Private yacht charter</li></ul><div class="pkg-footer"><div class="pkg-price"><span class="price-from" data-i18n="price_from">Starting from</span><span class="price-value" data-price-inr="120000">₹1,20,000<small>/couple</small></span></div><button class="btn btn-pkg" data-i18n="btn_view_details" onclick="openPackageModal('luxury')">View Details</button></div></div></div>
+      <!-- PKG 1: EXPLORE PORTBLAIR -->
+      <div class="pkg-card" data-animate data-delay="0" data-pkg-id="explore_portblair">
+        <div class="pkg-img" style="background-image:url('images/pkg_explore_portblair.png')">
+          <span class="pkg-badge badge--green">Best Value</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 3 Days / 2 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">EXPLORE PORTBLAIR</h3>
+          <ul class="pkg-highlights">
+            <li>Corbyn's Cove beach visit</li>
+            <li>Historic Cellular Jail visit</li>
+            <li>Cellular Jail Light &amp; Sound show</li>
+            <li>Ross Island heritage tour</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('explore_portblair')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
 
-      <div class="pkg-card" data-animate data-delay="200"><div class="pkg-img" data-img="pkg-adventure" style="background-image:url('https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=800&q=90')"><span class="pkg-badge badge--blue">Adventure</span></div><div class="pkg-body"><div class="pkg-meta"><span class="pkg-duration">⏱ 6D / 5N</span><span class="pkg-dest">📍 Andaman</span></div><h3 class="pkg-title">Adventure Explorer</h3><ul class="pkg-highlights"><li>Certified scuba diving</li><li>Sea walk &amp; snorkeling</li><li>Island hopping (3 islands)</li><li>Water sports extravaganza</li></ul><div class="pkg-footer"><div class="pkg-price"><span class="price-from" data-i18n="price_from">Starting from</span><span class="price-value" data-price-inr="35000">₹35,000<small>/person</small></span></div><button class="btn btn-pkg" data-i18n="btn_view_details" onclick="openPackageModal('adventure')">View Details</button></div></div></div>
+      <!-- PKG 2: ESCAPADE ANDAMAN -->
+      <div class="pkg-card" data-animate data-delay="100" data-pkg-id="escapade_andaman">
+        <div class="pkg-img" style="background-image:url('images/pkg_escapade_andaman.png')">
+          <span class="pkg-badge badge--blue">Popular</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 4 Days / 3 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">ESCAPADE ANDAMAN</h3>
+          <ul class="pkg-highlights">
+            <li>Cellular Jail light &amp; sound show</li>
+            <li>Havelock Island cruise trip</li>
+            <li>Radhanagar Beach sunset</li>
+            <li>Kalapathar Beach sightseeing</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('escapade_andaman')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
 
-      <div class="pkg-card" data-animate data-delay="0"><div class="pkg-img" data-img="pkg-budget" style="background-image:url('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=90')"><span class="pkg-badge badge--green">Best Value</span></div><div class="pkg-body"><div class="pkg-meta"><span class="pkg-duration">⏱ 4D / 3N</span><span class="pkg-dest">📍 Goa</span></div><h3 class="pkg-title">Budget Smart Trip</h3><ul class="pkg-highlights"><li>North &amp; South Goa coverage</li><li>Heritage trail &amp; beach parties</li><li>Budget hotel + breakfast</li><li>All transfers included</li></ul><div class="pkg-footer"><div class="pkg-price"><span class="price-from" data-i18n="price_from">Starting from</span><span class="price-value" data-price-inr="15000">₹15,000<small>/person</small></span></div><button class="btn btn-pkg" data-i18n="btn_view_details" onclick="openPackageModal('budget')">View Details</button></div></div></div>
+      <!-- PKG 3: OFFBEAT ANDAMAN -->
+      <div class="pkg-card" data-animate data-delay="200" data-pkg-id="offbeat_andaman">
+        <div class="pkg-img" style="background-image:url('images/pkg_offbeat_andaman.png')">
+          <span class="pkg-badge badge--blue">Adventure</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 4 Days / 3 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">OFFBEAT ANDAMAN</h3>
+          <ul class="pkg-highlights">
+            <li>Jolly Buoy Island coral reef</li>
+            <li>Wandoor Beach marine park</li>
+            <li>Chidiyatapu Beach sunset</li>
+            <li>Munda Pahar scenic trek</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('offbeat_andaman')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
 
-      <div class="pkg-card" data-animate data-delay="100"><div class="pkg-img" data-img="pkg-family" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=90')"><span class="pkg-badge badge--teal">Family</span></div><div class="pkg-body"><div class="pkg-meta"><span class="pkg-duration">⏱ 6D / 5N</span><span class="pkg-dest">📍 Andaman</span></div><h3 class="pkg-title">Family Vacation Package</h3><ul class="pkg-highlights"><li>Glass-bottom boat ride</li><li>Cellular Jail light show</li><li>Family beach activities</li><li>Kid-friendly resorts</li></ul><div class="pkg-footer"><div class="pkg-price"><span class="price-from" data-i18n="price_from">Starting from</span><span class="price-value" data-price-inr="65000">₹65,000<small>/family</small></span></div><button class="btn btn-pkg" data-i18n="btn_view_details" onclick="openPackageModal('family')">View Details</button></div></div></div>
+      <!-- PKG 4: PARADISE PAIR HONEYMOON -->
+      <div class="pkg-card" data-animate data-delay="0" data-pkg-id="paradise_pair">
+        <div class="pkg-img" style="background-image:url('images/pkg_paradise_pair.png')">
+          <span class="pkg-badge badge--rose">Honeymoon</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 4 Days / 3 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">PARADISE PAIR HONEYMOON</h3>
+          <ul class="pkg-highlights">
+            <li>Complimentary Candle Night dinner</li>
+            <li>Havelock Island romantic cruise</li>
+            <li>Radhanagar Beach sunset walk</li>
+            <li>Kalapathar Beach visit</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('paradise_pair')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PKG 5: ISLAND BLISS -->
+      <div class="pkg-card" data-animate data-delay="100" data-pkg-id="island_bliss">
+        <div class="pkg-img" style="background-image:url('images/pkg_island_bliss.png')">
+          <span class="pkg-badge badge--teal">Trending</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 5 Days / 4 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">ISLAND BLISS</h3>
+          <ul class="pkg-highlights">
+            <li>Havelock &amp; Neil Island cruise</li>
+            <li>Radhanagar Beach sunset</li>
+            <li>Bharatpur &amp; Laxmanpur beaches</li>
+            <li>Chidiyatapu Beach visit</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('island_bliss')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PKG 6: ISLAND TREASURES -->
+      <div class="pkg-card" data-animate data-delay="200" data-pkg-id="island_treasures">
+        <div class="pkg-img" style="background-image:url('images/pkg_island_treasures.png')">
+          <span class="pkg-badge badge--gold">Explorer</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 5 Days / 4 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">ISLAND TREASURES</h3>
+          <ul class="pkg-highlights">
+            <li>Baratang Island roadtrip</li>
+            <li>Limestone Cave exploration</li>
+            <li>Tropical forest road safari</li>
+            <li>Ross Island &amp; North Bay Island</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('island_treasures')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PKG 7: TIDAL ROMANCE HONEYMOON -->
+      <div class="pkg-card" data-animate data-delay="0" data-pkg-id="tidal_romance">
+        <div class="pkg-img" style="background-image:url('images/pkg_tidal_romance.png')">
+          <span class="pkg-badge badge--rose">Honeymoon</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 5 Days / 4 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">TIDAL ROMANCE HONEYMOON</h3>
+          <ul class="pkg-highlights">
+            <li>Complimentary Scuba Diving</li>
+            <li>Complimentary Candle Night dinner</li>
+            <li>Elephanta Beach coral reef</li>
+            <li>Radhanagar &amp; Kalapathar beaches</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('tidal_romance')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PKG 8: ANDAMAN ODYSSEY -->
+      <div class="pkg-card" data-animate data-delay="100" data-pkg-id="andaman_odyssey">
+        <div class="pkg-img" style="background-image:url('images/pkg_andaman_odyssey.png')">
+          <span class="pkg-badge badge--teal">Classic</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 6 Days / 5 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">ANDAMAN ODYSSEY</h3>
+          <ul class="pkg-highlights">
+            <li>Havelock &amp; Neil Island cruise</li>
+            <li>Radhanagar Beach sunset</li>
+            <li>Elephanta Beach water sports</li>
+            <li>Bharatpur &amp; Laxmanpur beaches</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('andaman_odyssey')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PKG 9: ROMANTIC RETREATS HONEYMOON -->
+      <div class="pkg-card" data-animate data-delay="200" data-pkg-id="romantic_retreats">
+        <div class="pkg-img" style="background-image:url('images/pkg_romantic_retreats.png')">
+          <span class="pkg-badge badge--rose">Honeymoon Deluxe</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 6 Days / 5 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">ROMANTIC RETREATS HONEYMOON</h3>
+          <ul class="pkg-highlights">
+            <li>Complimentary Scuba Diving</li>
+            <li>Complimentary Candle Night dinner</li>
+            <li>Havelock &amp; Neil Island cruise</li>
+            <li>Radhanagar &amp; Kalapathar beaches</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('romantic_retreats')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PKG 10: ANDAMAN AURA -->
+      <div class="pkg-card" data-animate data-delay="0" data-pkg-id="andaman_aura">
+        <div class="pkg-img" style="background-image:url('images/pkg_andaman_aura.png')">
+          <span class="pkg-badge badge--gold">Premium</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 7 Days / 6 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">ANDAMAN AURA</h3>
+          <ul class="pkg-highlights">
+            <li>Baratang Island roadtrip</li>
+            <li>Limestone Cave exploration</li>
+            <li>Havelock &amp; Neil Island cruise</li>
+            <li>Radhanagar Beach sunset</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('andaman_aura')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PKG 11: SEASOUL SOJOURN -->
+      <div class="pkg-card" data-animate data-delay="100" data-pkg-id="seasoul_sojourn">
+        <div class="pkg-img" style="background-image:url('images/pkg_seasoul_sojourn.png')">
+          <span class="pkg-badge badge--gold">Grand Tour</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 8 Days / 7 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">SEASOUL SOJOURN</h3>
+          <ul class="pkg-highlights">
+            <li>Baratang Island roadtrip</li>
+            <li>Ross Island &amp; North Bay tour</li>
+            <li>Havelock &amp; Neil Island cruise</li>
+            <li>Radhanagar Beach sunset</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('seasoul_sojourn')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PKG 12: ETHEREAL ISLES -->
+      <div class="pkg-card" data-animate data-delay="200" data-pkg-id="ethereal_isles">
+        <div class="pkg-img" style="background-image:url('images/pkg_ethereal_isles.png')">
+          <span class="pkg-badge badge--gold">Ultimate Luxury</span>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-meta">
+            <span class="pkg-duration">⏱ 9 Days / 8 Nights</span>
+            <span class="pkg-dest">📍 Andaman</span>
+          </div>
+          <h3 class="pkg-title">ETHEREAL ISLES</h3>
+          <ul class="pkg-highlights">
+            <li>Middle &amp; North Andaman tour</li>
+            <li>Ross &amp; Smith Island beach</li>
+            <li>Havelock &amp; Neil Island cruise</li>
+            <li>Radhanagar Beach sunset</li>
+          </ul>
+          <div class="pkg-footer">
+            <button class="btn btn-pkg btn-full" data-i18n="btn_enquire_now" onclick="openPackageModal('ethereal_isles')">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
     </div>
+      <button class="slider-btn next-btn" aria-label="Next Package" onclick="window.scrollPackages(1)">›</button>
+    </div>
+    <div class="slider-dots-container" id="sliderDots"></div>
   </div>
 </section>
 
@@ -254,20 +531,12 @@
           <!-- STEP 1: Destination -->
           <div class="builder-step active" id="step-1">
             <div class="step-header"><h3 class="step-title" data-i18n="step1_title">Where do you want to go?</h3><p class="step-sub" data-i18n="step1_sub">Choose your dream destination</p></div>
-            <div class="dest-options">
-              <label class="dest-opt-label" for="dest-andaman">
-                <input type="radio" name="destination" id="dest-andaman" value="andaman" />
+            <div class="dest-options" style="justify-content: center;">
+              <label class="dest-opt-label" for="dest-andaman" style="max-width: 340px; width: 100%;">
+                <input type="radio" name="destination" id="dest-andaman" value="andaman" checked />
                 <div class="dest-opt-card" style="background-image:url('images/builder_andaman.png')">
                   <div class="dest-opt-dark"></div>
                   <div class="dest-opt-content"><span class="dest-opt-name">Andaman</span><span class="dest-opt-tag">Islands &amp; Ocean</span></div>
-                  <div class="dest-opt-selected">✓ Selected</div>
-                </div>
-              </label>
-              <label class="dest-opt-label" for="dest-goa">
-                <input type="radio" name="destination" id="dest-goa" value="goa" />
-                <div class="dest-opt-card" style="background-image:url('images/builder_goa.png')">
-                  <div class="dest-opt-dark"></div>
-                  <div class="dest-opt-content"><span class="dest-opt-name">Goa</span><span class="dest-opt-tag">Beaches &amp; Vibes</span></div>
                   <div class="dest-opt-selected">✓ Selected</div>
                 </div>
               </label>
@@ -361,10 +630,11 @@
           <div class="builder-step" id="step-5">
             <div class="step-header"><h3 class="step-title" data-i18n="step5_title">Where will you stay?</h3><p class="step-sub" data-i18n="step5_sub">Choose your accommodation level</p></div>
             <div class="accom-grid">
-              <label class="accom-card" for="accom-budget"><input type="radio" name="accommodation" id="accom-budget" value="budget" data-price="4000" /><div class="accom-inner"><span class="accom-icon">🏨</span><span class="accom-name">Budget Hotel</span><span class="accom-sub">Clean &amp; comfortable</span><span class="accom-price">₹3K–5K/night</span><span class="accom-check">✓</span></div></label>
-              <label class="accom-card" for="accom-premium"><input type="radio" name="accommodation" id="accom-premium" value="premium" data-price="9000" /><div class="accom-inner"><span class="accom-icon">🌟</span><span class="accom-name">Premium Hotel</span><span class="accom-sub">Elevated experience</span><span class="accom-price">₹7K–12K/night</span><span class="accom-check">✓</span></div></label>
-              <label class="accom-card" for="accom-luxury"><input type="radio" name="accommodation" id="accom-luxury" value="luxury" data-price="20000" /><div class="accom-inner"><span class="accom-icon">🏝️</span><span class="accom-name">Luxury Resort</span><span class="accom-sub">World-class amenities</span><span class="accom-price">₹15K–25K/night</span><span class="accom-check">✓</span></div></label>
-              <label class="accom-card" for="accom-villa"><input type="radio" name="accommodation" id="accom-villa" value="villa" data-price="45000" /><div class="accom-inner"><span class="accom-icon">🏖️</span><span class="accom-name">Private Villa</span><span class="accom-sub">Ultimate exclusivity</span><span class="accom-price">₹30K–60K/night</span><span class="accom-check">✓</span></div></label>
+              <label class="accom-card" for="accom-homestay"><input type="radio" name="accommodation" id="accom-homestay" value="homestay" data-price="1750" /><div class="accom-inner"><span class="accom-icon">🏡</span><span class="accom-name">Homestay / Hostel</span><span class="accom-sub">Cozy &amp; social</span><span class="accom-check">✓</span></div></label>
+              <label class="accom-card" for="accom-budget"><input type="radio" name="accommodation" id="accom-budget" value="budget" data-price="4000" /><div class="accom-inner"><span class="accom-icon">🏨</span><span class="accom-name">Budget Hotel</span><span class="accom-sub">Clean &amp; comfortable</span><span class="accom-check">✓</span></div></label>
+              <label class="accom-card" for="accom-premium"><input type="radio" name="accommodation" id="accom-premium" value="premium" data-price="9000" /><div class="accom-inner"><span class="accom-icon">🌟</span><span class="accom-name">Premium Hotel</span><span class="accom-sub">Elevated experience</span><span class="accom-check">✓</span></div></label>
+              <label class="accom-card" for="accom-luxury"><input type="radio" name="accommodation" id="accom-luxury" value="luxury" data-price="20000" /><div class="accom-inner"><span class="accom-icon">🏝️</span><span class="accom-name">Luxury Resort</span><span class="accom-sub">World-class amenities</span><span class="accom-check">✓</span></div></label>
+              <label class="accom-card" for="accom-villa"><input type="radio" name="accommodation" id="accom-villa" value="villa" data-price="45000" /><div class="accom-inner"><span class="accom-icon">🏖️</span><span class="accom-name">Private Villa</span><span class="accom-sub">Ultimate exclusivity</span><span class="accom-check">✓</span></div></label>
             </div>
           </div>
 
@@ -372,16 +642,15 @@
           <div class="builder-step" id="step-6">
             <div class="step-header"><h3 class="step-title" data-i18n="step6_title">What will you do?</h3><p class="step-sub" data-i18n="step6_sub">Select all activities that excite you (multi-select)</p></div>
             <div class="activities-grid">
-              <label class="activity-chip" for="act-scuba"><input type="checkbox" id="act-scuba" value="scuba" data-price="3500" data-label="Scuba Diving" /><div class="chip-inner"><span class="chip-icon">🤿</span><span class="chip-name">Scuba Diving</span><span class="chip-price">+₹3,500</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-snorkel"><input type="checkbox" id="act-snorkel" value="snorkel" data-price="1500" data-label="Snorkeling" /><div class="chip-inner"><span class="chip-icon">🐠</span><span class="chip-name">Snorkeling</span><span class="chip-price">+₹1,500</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-island"><input type="checkbox" id="act-island" value="island" data-price="2500" data-label="Island Hopping" /><div class="chip-inner"><span class="chip-icon">🚢</span><span class="chip-name">Island Hopping</span><span class="chip-price">+₹2,500</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-dinner"><input type="checkbox" id="act-dinner" value="dinner" data-price="4000" data-label="Candlelight Dinner" /><div class="chip-inner"><span class="chip-icon">🕯️</span><span class="chip-name">Candlelight Dinner</span><span class="chip-price">+₹4,000</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-watersports"><input type="checkbox" id="act-watersports" value="watersports" data-price="2000" data-label="Water Sports" /><div class="chip-inner"><span class="chip-icon">🏄</span><span class="chip-name">Water Sports</span><span class="chip-price">+₹2,000</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-nightlife"><input type="checkbox" id="act-nightlife" value="nightlife" data-price="1500" data-label="Nightlife (Goa)" /><div class="chip-inner"><span class="chip-icon">🎉</span><span class="chip-name">Nightlife (Goa)</span><span class="chip-price">+₹1,500</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-seawalk"><input type="checkbox" id="act-seawalk" value="seawalk" data-price="2800" data-label="Sea Walk" /><div class="chip-inner"><span class="chip-icon">🌊</span><span class="chip-name">Sea Walk</span><span class="chip-price">+₹2,800</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-kayak"><input type="checkbox" id="act-kayak" value="kayak" data-price="1800" data-label="Kayaking" /><div class="chip-inner"><span class="chip-icon">🚣</span><span class="chip-name">Kayaking</span><span class="chip-price">+₹1,800</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-glassbottom"><input type="checkbox" id="act-glassbottom" value="glassbottom" data-price="1200" data-label="Glass Bottom Boat" /><div class="chip-inner"><span class="chip-icon">🪟</span><span class="chip-name">Glass Bottom Boat</span><span class="chip-price">+₹1,200</span><span class="chip-check">✓</span></div></label>
-              <label class="activity-chip" for="act-trek"><input type="checkbox" id="act-trek" value="trek" data-price="2200" data-label="Rainforest Trek" /><div class="chip-inner"><span class="chip-icon">🌿</span><span class="chip-name">Rainforest Trek</span><span class="chip-price">+₹2,200</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-scuba"><input type="checkbox" id="act-scuba" value="scuba" data-price="3500" data-label="Scuba Diving" /><div class="chip-inner"><span class="chip-icon">🤿</span><span class="chip-name">Scuba Diving</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-snorkel"><input type="checkbox" id="act-snorkel" value="snorkel" data-price="1500" data-label="Snorkeling" /><div class="chip-inner"><span class="chip-icon">🐠</span><span class="chip-name">Snorkeling</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-island"><input type="checkbox" id="act-island" value="island" data-price="2500" data-label="Island Hopping" /><div class="chip-inner"><span class="chip-icon">🚢</span><span class="chip-name">Island Hopping</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-dinner"><input type="checkbox" id="act-dinner" value="dinner" data-price="4000" data-label="Candlelight Dinner" /><div class="chip-inner"><span class="chip-icon">🕯️</span><span class="chip-name">Candlelight Dinner</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-watersports"><input type="checkbox" id="act-watersports" value="watersports" data-price="2000" data-label="Water Sports" /><div class="chip-inner"><span class="chip-icon">🏄</span><span class="chip-name">Water Sports</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-seawalk"><input type="checkbox" id="act-seawalk" value="seawalk" data-price="2800" data-label="Sea Walk" /><div class="chip-inner"><span class="chip-icon">🌊</span><span class="chip-name">Sea Walk</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-kayak"><input type="checkbox" id="act-kayak" value="kayak" data-price="1800" data-label="Kayaking" /><div class="chip-inner"><span class="chip-icon">🚣</span><span class="chip-name">Kayaking</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-glassbottom"><input type="checkbox" id="act-glassbottom" value="glassbottom" data-price="1200" data-label="Glass Bottom Boat" /><div class="chip-inner"><span class="chip-icon">🪟</span><span class="chip-name">Glass Bottom Boat</span><span class="chip-check">✓</span></div></label>
+              <label class="activity-chip" for="act-trek"><input type="checkbox" id="act-trek" value="trek" data-price="2200" data-label="Rainforest Trek" /><div class="chip-inner"><span class="chip-icon">🌿</span><span class="chip-name">Rainforest Trek</span><span class="chip-check">✓</span></div></label>
             </div>
           </div>
 
@@ -389,9 +658,9 @@
           <div class="builder-step" id="step-7">
             <div class="step-header"><h3 class="step-title" data-i18n="step7_title">How will you get there?</h3><p class="step-sub" data-i18n="step7_sub">Choose your preferred mode of transport</p></div>
             <div class="transport-grid">
-              <label class="transport-card" for="trans-flight"><input type="radio" name="transport" id="trans-flight" value="flight" data-price="12000" data-label="Flights" /><div class="trans-inner"><span class="trans-icon">✈️</span><span class="trans-name">Flights</span><span class="trans-detail">Round-trip airfare from major cities</span><span class="trans-price">+₹12,000/person</span><span class="trans-check">✓</span></div></label>
-              <label class="transport-card" for="trans-ferry"><input type="radio" name="transport" id="trans-ferry" value="ferry" data-price="3000" data-label="Ferry" /><div class="trans-inner"><span class="trans-icon">⛴️</span><span class="trans-name">Ferry</span><span class="trans-detail">Scenic inter-island transfers</span><span class="trans-price">+₹3,000/person</span><span class="trans-check">✓</span></div></label>
-              <label class="transport-card" for="trans-cab"><input type="radio" name="transport" id="trans-cab" value="cab" data-price="5000" data-label="Private Cab" /><div class="trans-inner"><span class="trans-icon">🚗</span><span class="trans-name">Private Cab</span><span class="trans-detail">Dedicated car for all transfers</span><span class="trans-price">+₹5,000 flat</span><span class="trans-check">✓</span></div></label>
+              <label class="transport-card" for="trans-flight"><input type="radio" name="transport" id="trans-flight" value="flight" data-price="12000" data-label="Flights" /><div class="trans-inner"><span class="trans-icon">✈️</span><span class="trans-name">Flights</span><span class="trans-detail">Round-trip airfare from major cities</span><span class="trans-check">✓</span></div></label>
+              <label class="transport-card" for="trans-ferry"><input type="radio" name="transport" id="trans-ferry" value="ferry" data-price="3000" data-label="Ferry" /><div class="trans-inner"><span class="trans-icon">⛴️</span><span class="trans-name">Ferry</span><span class="trans-detail">Scenic inter-island transfers</span><span class="trans-check">✓</span></div></label>
+              <label class="transport-card" for="trans-cab"><input type="radio" name="transport" id="trans-cab" value="cab" data-price="5000" data-label="Private Cab" /><div class="trans-inner"><span class="trans-icon">🚗</span><span class="trans-name">Private Cab</span><span class="trans-detail">Dedicated car for all transfers</span><span class="trans-check">✓</span></div></label>
             </div>
           </div>
 
@@ -399,24 +668,31 @@
           <div class="builder-step" id="step-8">
             <div class="step-header"><h3 class="step-title" data-i18n="step8_title">Special additions?</h3><p class="step-sub" data-i18n="step8_sub">Make your trip unforgettable with premium experiences (multi-select)</p></div>
             <div class="addons-scrollgrid">
-              <label class="addon-chip" for="ao-photo"><input type="checkbox" id="ao-photo" value="photo" data-price="8000" data-label="Professional Photoshoot" /><div class="aochip-inner"><span class="ao-icon">📸</span><span class="ao-name">Photoshoot</span><span class="ao-price">₹8,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-decor"><input type="checkbox" id="ao-decor" value="decor" data-price="5000" data-label="Room Decorations" /><div class="aochip-inner"><span class="ao-icon">🌸</span><span class="ao-name">Room Decor</span><span class="ao-price">₹5,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-guide"><input type="checkbox" id="ao-guide" value="guide" data-price="3500" data-label="Private Guide" /><div class="aochip-inner"><span class="ao-icon">🧭</span><span class="ao-name">Private Guide</span><span class="ao-price">₹3,500/day</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-honeymoon"><input type="checkbox" id="ao-honeymoon" value="honeymoon" data-price="7500" data-label="Honeymoon Setup" /><div class="aochip-inner"><span class="ao-icon">💕</span><span class="ao-name">Honeymoon Setup</span><span class="ao-price">₹7,500</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-birthday"><input type="checkbox" id="ao-birthday" value="birthday" data-price="6000" data-label="Birthday Surprise" /><div class="aochip-inner"><span class="ao-icon">🎂</span><span class="ao-name">Birthday Surprise</span><span class="ao-price">₹6,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-proposal"><input type="checkbox" id="ao-proposal" value="proposal" data-price="12000" data-label="Proposal Setup" /><div class="aochip-inner"><span class="ao-icon">💍</span><span class="ao-name">Proposal Setup</span><span class="ao-price">₹12,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-beachdinner"><input type="checkbox" id="ao-beachdinner" value="beachdinner" data-price="6000" data-label="Candlelight Beach Dinner" /><div class="aochip-inner"><span class="ao-icon">🌅</span><span class="ao-name">Beach Dinner</span><span class="ao-price">₹6,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-yacht"><input type="checkbox" id="ao-yacht" value="yacht" data-price="25000" data-label="Private Yacht" /><div class="aochip-inner"><span class="ao-icon">🛥️</span><span class="ao-name">Private Yacht</span><span class="ao-price">₹25,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-spa"><input type="checkbox" id="ao-spa" value="spa" data-price="6500" data-label="Spa & Wellness" /><div class="aochip-inner"><span class="ao-icon">🧘</span><span class="ao-name">Spa &amp; Wellness</span><span class="ao-price">₹6,500</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-drone"><input type="checkbox" id="ao-drone" value="drone" data-price="10000" data-label="Drone Videography" /><div class="aochip-inner"><span class="ao-icon">🚁</span><span class="ao-name">Drone Video</span><span class="ao-price">₹10,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-underwater"><input type="checkbox" id="ao-underwater" value="underwater" data-price="12000" data-label="Underwater Shoot" /><div class="aochip-inner"><span class="ao-icon">🤿</span><span class="ao-name">Underwater Shoot</span><span class="ao-price">₹12,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-bonfire"><input type="checkbox" id="ao-bonfire" value="bonfire" data-price="3500" data-label="Beach Bonfire" /><div class="aochip-inner"><span class="ao-icon">🔥</span><span class="ao-name">Beach Bonfire</span><span class="ao-price">₹3,500</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-yoga"><input type="checkbox" id="ao-yoga" value="yoga" data-price="3000" data-label="Private Yoga" /><div class="aochip-inner"><span class="ao-icon">🧘‍♀️</span><span class="ao-name">Private Yoga</span><span class="ao-price">₹3,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-vip"><input type="checkbox" id="ao-vip" value="vip" data-price="5000" data-label="VIP Club Access" /><div class="aochip-inner"><span class="ao-icon">🎉</span><span class="ao-name">VIP Club (Goa)</span><span class="ao-price">₹5,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-concierge"><input type="checkbox" id="ao-concierge" value="concierge" data-price="8000" data-label="Personal Concierge" /><div class="aochip-inner"><span class="ao-icon">🎩</span><span class="ao-name">Concierge</span><span class="ao-price">₹8,000/day</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-foodtour"><input type="checkbox" id="ao-foodtour" value="foodtour" data-price="3000" data-label="Guided Food Tour" /><div class="aochip-inner"><span class="ao-icon">🍽️</span><span class="ao-name">Food Tour</span><span class="ao-price">₹3,000</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-cultural"><input type="checkbox" id="ao-cultural" value="cultural" data-price="4500" data-label="Cultural Experience" /><div class="aochip-inner"><span class="ao-icon">🎭</span><span class="ao-name">Cultural Tour</span><span class="ao-price">₹4,500</span><span class="ao-check">✓</span></div></label>
-              <label class="addon-chip" for="ao-biolum"><input type="checkbox" id="ao-biolum" value="biolum" data-price="2500" data-label="Bioluminescent Beach" /><div class="aochip-inner"><span class="ao-icon">✨</span><span class="ao-name">Biolum. Beach</span><span class="ao-price">₹2,500</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-photo"><input type="checkbox" id="ao-photo" value="photo" data-price="0" data-label="Professional Photoshoot" /><div class="aochip-inner"><span class="ao-icon">📸</span><span class="ao-name">Photoshoot</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-decor"><input type="checkbox" id="ao-decor" value="decor" data-price="0" data-label="Room Decorations" /><div class="aochip-inner"><span class="ao-icon">🌸</span><span class="ao-name">Room Decor</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-guide"><input type="checkbox" id="ao-guide" value="guide" data-price="0" data-label="Private Guide" /><div class="aochip-inner"><span class="ao-icon">🧭</span><span class="ao-name">Private Guide</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-honeymoon"><input type="checkbox" id="ao-honeymoon" value="honeymoon" data-price="0" data-label="Honeymoon Setup" /><div class="aochip-inner"><span class="ao-icon">💕</span><span class="ao-name">Honeymoon Setup</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-birthday"><input type="checkbox" id="ao-birthday" value="birthday" data-price="0" data-label="Birthday Surprise" /><div class="aochip-inner"><span class="ao-icon">🎂</span><span class="ao-name">Birthday Surprise</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-proposal"><input type="checkbox" id="ao-proposal" value="proposal" data-price="0" data-label="Proposal Setup" /><div class="aochip-inner"><span class="ao-icon">💍</span><span class="ao-name">Proposal Setup</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-beachdinner"><input type="checkbox" id="ao-beachdinner" value="beachdinner" data-price="0" data-label="Candlelight Beach Dinner" /><div class="aochip-inner"><span class="ao-icon">🌅</span><span class="ao-name">Beach Dinner</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-yacht"><input type="checkbox" id="ao-yacht" value="yacht" data-price="0" data-label="Private Yacht" /><div class="aochip-inner"><span class="ao-icon">🛥️</span><span class="ao-name">Private Yacht</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-spa"><input type="checkbox" id="ao-spa" value="spa" data-price="0" data-label="Spa & Wellness" /><div class="aochip-inner"><span class="ao-icon">🧘</span><span class="ao-name">Spa &amp; Wellness</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-drone"><input type="checkbox" id="ao-drone" value="drone" data-price="0" data-label="Drone Videography" /><div class="aochip-inner"><span class="ao-icon">🚁</span><span class="ao-name">Drone Video</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-underwater"><input type="checkbox" id="ao-underwater" value="underwater" data-price="0" data-label="Underwater Shoot" /><div class="aochip-inner"><span class="ao-icon">🤿</span><span class="ao-name">Underwater Shoot</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-bonfire"><input type="checkbox" id="ao-bonfire" value="bonfire" data-price="0" data-label="Beach Bonfire" /><div class="aochip-inner"><span class="ao-icon">🔥</span><span class="ao-name">Beach Bonfire</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-yoga"><input type="checkbox" id="ao-yoga" value="yoga" data-price="0" data-label="Private Yoga" /><div class="aochip-inner"><span class="ao-icon">🧘‍♀️</span><span class="ao-name">Private Yoga</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-concierge"><input type="checkbox" id="ao-concierge" value="concierge" data-price="0" data-label="Personal Concierge" /><div class="aochip-inner"><span class="ao-icon">🎩</span><span class="ao-name">Concierge</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-foodtour"><input type="checkbox" id="ao-foodtour" value="foodtour" data-price="0" data-label="Guided Food Tour" /><div class="aochip-inner"><span class="ao-icon">🍽️</span><span class="ao-name">Food Tour</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-cultural"><input type="checkbox" id="ao-cultural" value="cultural" data-price="0" data-label="Cultural Experience" /><div class="aochip-inner"><span class="ao-icon">🎭</span><span class="ao-name">Cultural Tour</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+              <label class="addon-chip" for="ao-biolum"><input type="checkbox" id="ao-biolum" value="biolum" data-price="0" data-label="Bioluminescent Beach" /><div class="aochip-inner"><span class="ao-icon">✨</span><span class="ao-name">Biolum. Beach</span><span class="ao-price" data-i18n="ao_extra_charge">Charges extra</span><span class="ao-check">✓</span></div></label>
+            </div>
+
+            <!-- Seasonal Pricing Info Banner -->
+            <div class="seasonal-pricing-banner" style="margin-top:20px; padding:15px; border-radius:12px; background:rgba(255, 193, 7, 0.1); border:1px solid #ffc107; color:#856404; display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+              <span style="font-size:1.2rem;">⚠️</span>
+              <p style="margin:0; font-size:0.88rem; font-weight:500;">
+                Prices may vary depending on the season, availability, and demand.
+              </p>
             </div>
 
             <!-- Custom Request -->
@@ -438,7 +714,7 @@
         <!-- Summary Sidebar -->
         <div class="builder-summary" id="builderSummary">
           <div class="summary-top">
-            <div class="summary-logo-mark"><span class="sl-block"></span><span class="sl-7">7</span><span class="sl-r">R</span></div>
+            <img src="images/SevenRayslogo.jpg" alt="Seven Rays Travel Agency" class="logo-img logo-img--xs">
             <h3 class="summary-title" data-i18n="summary_title">Your Trip Plan</h3>
           </div>
           <div class="summary-items" id="summaryItems">
@@ -593,7 +869,7 @@
       <div class="testi-track" id="testiTrack">
         <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"Seven Rays crafted the most magical honeymoon — every detail, from the candlelight dinner on Radhanagar to sunrise snorkeling, was pure perfection."</p><div class="testi-author"><div class="testi-avatar">AR</div><div class="testi-info"><strong>Arjun &amp; Riya Sharma</strong><small>Mumbai · Honeymoon in Andaman</small></div></div></div>
         <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"The AI trip planner suggested exactly what we needed! Built our family itinerary in seconds and they executed it flawlessly. Glass-bottom boat was the highlight!"</p><div class="testi-author"><div class="testi-avatar">PK</div><div class="testi-info"><strong>Priya Kapoor</strong><small>Delhi · Family Vacation, Andaman</small></div></div></div>
-        <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"As a budget traveler I was skeptical, but Seven Rays Goa package felt truly premium — great stay, zero hidden costs, and 24/7 availability on WhatsApp."</p><div class="testi-author"><div class="testi-avatar">RS</div><div class="testi-info"><strong>Rahul Singh</strong><small>Bangalore · Budget Smart Trip, Goa</small></div></div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"As a budget traveler I was skeptical, but Seven Rays Andaman package felt truly premium — great stay, zero hidden costs, and 24/7 availability on WhatsApp."</p><div class="testi-author"><div class="testi-avatar">RS</div><div class="testi-info"><strong>Rahul Singh</strong><small>Bangalore · Explore Port Blair, Andaman</small></div></div></div>
         <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"The scuba diving at Havelock was life-changing. Professional instructors, top-notch equipment. Seven Rays truly knows how to do adventure right."</p><div class="testi-author"><div class="testi-avatar">MJ</div><div class="testi-info"><strong>Meera Joshi</strong><small>Pune · Adventure Explorer Package</small></div></div></div>
         <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"The private villa was beyond expectations. The drone videography add-on gave us stunning footage we'll cherish forever. Seven Rays is our go-to from now on."</p><div class="testi-author"><div class="testi-avatar">NC</div><div class="testi-info"><strong>Neha &amp; Chirag Mehta</strong><small>Ahmedabad · Luxury Island Retreat</small></div></div></div>
       </div>
@@ -618,7 +894,7 @@
     <div class="section-header" data-animate>
       <span class="section-eyebrow" data-i18n="gallery_eyebrow">Visual Diaries</span>
       <h2 class="section-title" data-i18n="gallery_title">From Our Travels</h2>
-      <p class="section-subtitle" data-i18n="gallery_sub">Every frame tells a story. Explore moments captured across Andaman &amp; Goa.</p>
+      <p class="section-subtitle" data-i18n="gallery_sub">Every frame tells a story. Explore moments captured across Andaman.</p>
     </div>
     <div class="gallery-filters" data-animate>
       <button class="gal-filter active" data-filter="all">All</button>
@@ -771,7 +1047,7 @@
     <p class="cta-sub" data-i18n="cta_sub">Let Seven Rays turn your wanderlust into reality.<br>Every journey begins with a single step.</p>
     <div class="cta-btns">
       <a href="#builder" class="btn btn-primary btn-lg" data-i18n="btn_customize">✦ Customize My Trip</a>
-      <a href="https://wa.me/919531817142" class="btn btn-outline-white btn-lg" data-i18n="btn_whatsapp" target="_blank" onclick="event.preventDefault();openWhatsApp('general')">Chat on WhatsApp</a>
+      <a href="https://wa.me/918073740495" class="btn btn-outline-white btn-lg" data-i18n="btn_whatsapp" target="_blank" onclick="event.preventDefault();openWhatsApp('general')">Chat on WhatsApp</a>
     </div>
   </div>
 </section>
@@ -783,39 +1059,39 @@
       <div class="footer-grid">
         <div class="footer-brand-col">
           <div class="footer-logo">
-            <div class="logo-mark logo-mark--sm"><span class="logo-block-sm"></span><span class="logo-7-sm">7</span><span class="logo-r-sm">R</span></div>
+            <img src="images/SevenRayslogo.jpg" alt="Seven Rays Travel Agency" class="logo-img logo-img--sm">
             <div class="logo-text"><span class="logo-name">Seven Rays</span><span class="logo-sub">Travel Agency.</span></div>
           </div>
-          <p class="footer-tagline" data-i18n="footer_tagline">Crafting premium travel experiences in Andaman &amp; Goa. Your journey, our passion.</p>
+          <p class="footer-tagline" data-i18n="footer_tagline">Crafting premium travel experiences in Andaman. Your journey, our passion.</p>
           <div class="footer-socials">
-            <a href="#" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+            <a href="https://www.instagram.com/sevenraystravelagency?igsh=MThvemlyMmEzbWZseQ%3D%3D&utm_source=qr" class="social-icon" aria-label="Instagram" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
             <a href="#" class="social-icon" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-            <a href="https://wa.me/919531817142" class="social-icon social-icon--wa" aria-label="WhatsApp" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></a>
+            <a href="#" class="social-icon" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+            <a href="https://wa.me/918073740495" class="social-icon social-icon--wa" aria-label="WhatsApp" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></a>
           </div>
         </div>
-        <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#destinations">Destinations</a></li><li><a href="#packages">Packages</a></li><li><a href="#builder">Customize Trip</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#why-us">About Us</a></li></ul></div>
-        <div class="footer-col"><h4>Destinations</h4><ul><li><a href="#destinations">Port Blair</a></li><li><a href="#destinations">Havelock Island</a></li><li><a href="#destinations">Neil Island</a></li><li><a href="#destinations">North Goa</a></li><li><a href="#destinations">South Goa</a></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_quick_links">Quick Links</h4><ul><li><a href="#destinations">Destinations</a></li><li><a href="#packages">Packages</a></li><li><a href="#builder">Customize Trip</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#why-us">About Us</a></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_destinations">Destinations</h4><ul><li><a href="#destinations">Port Blair</a></li><li><a href="#destinations">Havelock Island</a></li><li><a href="#destinations">Neil Island</a></li></ul></div>
         <div class="footer-col footer-contact-col">
-          <h4>Get In Touch</h4>
+          <h4 data-i18n="footer_get_in_touch">Get In Touch</h4>
           <div class="footer-contact-items">
-            <p><span>📍</span> Port Blair, Andaman &amp; Nicobar Islands</p>
-            <p><span>📍</span> Panaji, Goa — 403001</p>
-            <p><span>📞</span> +91 98000 00000</p>
-            <p><span>✉️</span> hello@sevenraystravel.com</p>
+            <p><span>📍</span> <span data-i18n="footer_addr">Port Blair, Andaman &amp; Nicobar Islands</span></p>
+            <p><span>📞</span> <span data-i18n="footer_phone">+91 80737 40495</span></p>
+            <p><span>✉️</span> <a href="mailto:sevenraystravelagency@gmail.com" data-i18n="footer_email" style="color: inherit; text-decoration: none;">sevenraystravelagency@gmail.com</a></p>
           </div>
-          <a href="https://wa.me/919531817142" class="footer-wa-btn" target="_blank" onclick="event.preventDefault();openWhatsApp('general')"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>Chat on WhatsApp</a>
+          <a href="https://wa.me/918073740495" class="footer-wa-btn" target="_blank" onclick="event.preventDefault();openWhatsApp('general')"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg><span data-i18n="btn_whatsapp">Chat on WhatsApp</span></a>
         </div>
       </div>
     </div>
   </div>
-  <div class="footer-bottom"><div class="container"><p>© 2024 Seven Rays Travel Agency. All rights reserved. | Crafted with ♥ for premium travelers.</p></div></div>
+  <div class="footer-bottom"><div class="container"><p>© 2024 Seven Rays Travel Agency. All rights reserved. | Crafted with ♥ for premium travelers. | <a href="#" onclick="event.preventDefault(); window.openLegalModal('privacy')" data-i18n="link_privacy">Privacy Policy</a> | <a href="#" onclick="event.preventDefault(); window.openLegalModal('terms')" data-i18n="link_terms">Terms &amp; Conditions</a></p></div></div>
 </footer>
 
 <!-- WhatsApp Float -->
-<a href="https://wa.me/919531817142" class="wa-float" id="waFloat" target="_blank" aria-label="Chat on WhatsApp" onclick="event.preventDefault();openWhatsApp('general')">
+<a href="https://wa.me/918073740495" class="wa-float" id="waFloat" target="_blank" aria-label="Chat on WhatsApp" onclick="event.preventDefault();openWhatsApp('general')">
   <div class="wa-ring"></div>
   <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-  <span class="wa-label">Chat with us!</span>
+  <span class="wa-label" data-i18n="wa_float_label">Chat with us!</span>
 </a>
 
 <!-- Mobile FAB -->
@@ -827,17 +1103,140 @@
 <div class="exit-popup-overlay" id="exitPopupOverlay">
   <div class="exit-popup-box">
     <button class="ep-close" onclick="closeExitPopup()">&times;</button>
-    <div class="ep-visual" style="background-image:url('https://images.unsplash.com/photo-1524139542728-a8dc2e31de9b?auto=format&fit=crop&w=600&q=80')"><div class="ep-visual-overlay"></div><div class="ep-visual-text"><span>✈️</span><p>Free Consultation</p></div></div>
+    <div class="ep-visual" style="background-image:url('https://images.unsplash.com/photo-1524139542728-a8dc2e31de9b?auto=format&fit=crop&w=600&q=80')"><div class="ep-visual-overlay"></div><div class="ep-visual-text"><span>✈️</span><p data-i18n="ep_visual_lbl">Free Consultation</p></div></div>
     <div class="ep-content">
-      <span class="ep-eyebrow">Wait — Before You Go!</span>
-      <h3 class="ep-title">Get a Free Trip Consultation</h3>
-      <p class="ep-desc">Our travel experts will craft a personalized itinerary — completely free, zero commitment.</p>
+      <span class="ep-eyebrow" data-i18n="ep_eyebrow">Wait — Before You Go!</span>
+      <h3 class="ep-title" data-i18n="ep_title">Get a Free Trip Consultation</h3>
+      <p class="ep-desc" data-i18n="ep_desc">Our travel experts will craft a personalized itinerary — completely free, zero commitment.</p>
       <div class="ep-form">
-        <input type="text" class="ep-input" placeholder="Your Name" id="popupName" />
-        <input type="tel" class="ep-input" placeholder="WhatsApp / Phone Number" id="popupPhone" />
-        <button class="btn btn-primary btn-full" onclick="submitPopupLead()">Get My Free Plan 🎯</button>
+        <input type="text" class="ep-input" placeholder="Your Name" id="popupName" data-i18n-placeholder="ep_name_placeholder" />
+        <input type="tel" class="ep-input" placeholder="WhatsApp / Phone Number" id="popupPhone" data-i18n-placeholder="ep_phone_placeholder" />
+        <button class="btn btn-primary btn-full" onclick="submitPopupLead()" data-i18n="ep_btn">Get My Free Plan 🎯</button>
       </div>
-      <p class="ep-note">We'll call back within 2 hours. No spam, ever. 🔒</p>
+      <p class="ep-note" data-i18n="ep_note">We'll call back within 2 hours. No spam, ever. 🔒</p>
+    </div>
+  </div>
+</div>
+
+<!-- Legal Modal -->
+<div class="modal-overlay" id="legalModal" onclick="window.closeLegalModal(event)">
+  <div class="modal-box" id="legalModalBox" style="max-width: 800px; border-radius: 24px; overflow: hidden; background: var(--bg-1);">
+    <button class="modal-close" onclick="window.closeLegalModal()">&times;</button>
+    <div id="legalModalContent" class="modal-body" style="max-height: 75vh; overflow-y: auto; padding: 30px; text-align: left; color: var(--text-1); font-family: var(--font-sans); line-height: 1.6;">
+      <!-- Dynamic legal content will go here -->
+    </div>
+  </div>
+</div>
+
+<!-- Admin Login Modal -->
+<div class="modal-overlay" id="adminLoginModal" onclick="window.closeAdminLoginModal(event)">
+  <div class="modal-box" id="adminLoginModalBox" style="max-width: 400px; border-radius: 20px; overflow: hidden; background: var(--bg-1); border: 1px solid var(--card-border);">
+    <button class="modal-close" onclick="window.closeAdminLoginModal()">&times;</button>
+    <div class="modal-body" style="padding: 30px; text-align: left; color: var(--text-1); font-family: var(--font-sans);">
+      <h3 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; color: var(--text-1);">Admin Portal</h3>
+      <p style="font-size: 0.85rem; color: var(--text-3); margin-bottom: 20px;">Please enter your credentials to manage pricing settings.</p>
+      
+      <div style="margin-bottom: 16px;">
+        <label for="adminEmail" style="display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-2);">Email Address</label>
+        <input type="email" id="adminEmail" class="ep-input" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); padding: 12px; background: var(--bg-2); color: var(--text-1);" placeholder="sevenraystravelagency@gmail.com" />
+      </div>
+      
+      <div style="margin-bottom: 20px;">
+        <label for="adminPassword" style="display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-2);">Password</label>
+        <input type="password" id="adminPassword" class="ep-input" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); padding: 12px; background: var(--bg-2); color: var(--text-1);" placeholder="••••••••" />
+      </div>
+      
+      <button class="btn btn-primary btn-full" onclick="window.handleAdminLogin()" style="margin-bottom: 12px; width: 100%;">Login 🔐</button>
+      <div id="adminLoginError" style="color: #ff4d6d; font-size: 0.82rem; text-align: center; display: none; font-weight: 600;">Invalid password or email.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Dashboard Modal -->
+<div class="modal-overlay" id="adminDashboardModal" onclick="window.closeAdminDashboardModal(event)">
+  <div class="modal-box" id="adminDashboardModalBox" style="max-width: 850px; width: 95%; border-radius: 24px; overflow: hidden; background: var(--bg-1); border: 1px solid var(--card-border);">
+    <button class="modal-close" onclick="window.closeAdminDashboardModal()">&times;</button>
+    <div class="modal-body" style="padding: 30px; text-align: left; color: var(--text-1); font-family: var(--font-sans);">
+      <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 20px;">
+        <div>
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; margin-bottom: 4px; color: var(--text-1);">Admin Control Panel</h3>
+          <p style="font-size: 0.85rem; color: var(--text-3); margin: 0;">Configure global cash mode, package base rates, and builder pricing options.</p>
+        </div>
+        <button class="btn btn-outline-dark" onclick="window.handleAdminLogout()" style="padding: 6px 14px; font-size: 0.78rem;">Logout</button>
+      </div>
+
+      <!-- Dashboard Tabs -->
+      <div class="admin-tabs" style="display: flex; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px;">
+        <button class="admin-tab active" onclick="window.switchAdminTab('global')" id="tabBtn-global" style="padding: 8px 16px; border-radius: 8px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;">Global Settings</button>
+        <button class="admin-tab" onclick="window.switchAdminTab('packages')" id="tabBtn-packages" style="padding: 8px 16px; border-radius: 8px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;">Packages Editor</button>
+        <button class="admin-tab" onclick="window.switchAdminTab('builder')" id="tabBtn-builder" style="padding: 8px 16px; border-radius: 8px; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer;">Builder Rates</button>
+      </div>
+
+      <!-- TAB Content: Global -->
+      <div class="admin-tab-content active" id="tabContent-global">
+        <div style="background: var(--bg-2); padding: 20px; border-radius: 16px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <div>
+            <strong style="font-size: 1rem; display: block; margin-bottom: 4px; color: var(--text-1);">Enable Cash Mode (Display Pricing)</strong>
+            <p style="font-size: 0.82rem; color: var(--text-3); margin: 0;">If disabled, all numeric prices on packages and Trip Builder are hidden and show "Enquire Now".</p>
+          </div>
+          <label class="switch-container" style="position: relative; display: inline-block; width: 56px; height: 30px;">
+            <input type="checkbox" id="adminCashModeCheckbox" style="opacity: 0; width: 0; height: 0;" />
+            <span class="switch-slider" style="position: absolute; cursor: pointer; inset: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- TAB Content: Packages -->
+      <div class="admin-tab-content" id="tabContent-packages" style="display: none; max-height: 45vh; overflow-y: auto; padding-right: 10px;">
+        <div id="adminPackagesListContainer" style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Dynamically populated via script -->
+        </div>
+      </div>
+
+      <!-- TAB Content: Builder -->
+      <div class="admin-tab-content" id="tabContent-builder" style="display: none; max-height: 45vh; overflow-y: auto; padding-right: 10px;">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          
+          <div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-bottom: 12px; color: var(--yellow);">Base Rates</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+              <div>
+                <label style="display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 6px;">Base Price Per Night (₹)</label>
+                <input type="number" id="rate-base" class="ep-input" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); padding: 10px; background: var(--bg-2); color: var(--text-1);" />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-bottom: 12px; color: var(--yellow);">Accommodations Per Night (₹)</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;" id="adminAccomRatesContainer">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-bottom: 12px; color: var(--yellow);">Activities Unit Price (₹)</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;" id="adminActRatesContainer">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-bottom: 12px; color: var(--yellow);">Transport Price Rates (₹)</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;" id="adminTransRatesContainer">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div style="display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 20px;">
+        <button class="btn btn-outline-dark" onclick="window.closeAdminDashboardModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="window.saveAdminSettings()">Save Changes 💾</button>
+      </div>
+
     </div>
   </div>
 </div>
@@ -846,7 +1245,7 @@
 <div id="toastContainer" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:10px;pointer-events:none"></div>
 
 <div id="google_translate_element" style="display:none;"></div>
-<script src="translations.js"></script>
-<script src="script.js"></script>
+<script type="module" src="translations.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>

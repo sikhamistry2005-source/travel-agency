@@ -5,6 +5,98 @@
 'use strict';
 
 /* ================================================================
+   ADMIN PORTAL CONFIG & STATE
+   ================================================================ */
+const defaultAdminConfig = {
+  cashModeEnabled: false,
+  packagePrices: {
+    explore_portblair: 12000,
+    escapade_andaman: 18000,
+    offbeat_andaman: 19500,
+    paradise_pair: 38000,
+    island_bliss: 25000,
+    island_treasures: 24000,
+    tidal_romance: 48000,
+    andaman_odyssey: 32000,
+    romantic_retreats: 56000,
+    andaman_aura: 35000,
+    seasoul_sojourn: 42000,
+    ethereal_isles: 46000
+  },
+  packageDisabled: {
+    explore_portblair: false,
+    escapade_andaman: false,
+    offbeat_andaman: false,
+    paradise_pair: false,
+    island_bliss: false,
+    island_treasures: false,
+    tidal_romance: false,
+    andaman_odyssey: false,
+    romantic_retreats: false,
+    andaman_aura: false,
+    seasoul_sojourn: false,
+    ethereal_isles: false
+  },
+  baseRate: 5000,
+  accomRates: {
+    homestay: 1750,
+    budget: 4000,
+    premium: 9000,
+    luxury: 20000,
+    villa: 45000
+  },
+  actRates: {
+    scuba: 3500,
+    snorkel: 1500,
+    island: 2500,
+    dinner: 4000,
+    watersports: 2000,
+    seawalk: 2800,
+    kayak: 1800,
+    glassbottom: 1200,
+    trek: 2200
+  },
+  transRates: {
+    flight: 12000,
+    ferry: 3000,
+    cab: 5000
+  }
+};
+
+let adminConfig = { ...defaultAdminConfig };
+
+function loadAdminConfig() {
+  try {
+    const saved = localStorage.getItem('sr_admin_config');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      adminConfig = {
+        ...defaultAdminConfig,
+        ...parsed,
+        packagePrices: { ...defaultAdminConfig.packagePrices, ...(parsed.packagePrices || {}) },
+        packageDisabled: { ...defaultAdminConfig.packageDisabled, ...(parsed.packageDisabled || {}) },
+        accomRates: { ...defaultAdminConfig.accomRates, ...(parsed.accomRates || {}) },
+        actRates: { ...defaultAdminConfig.actRates, ...(parsed.actRates || {}) },
+        transRates: { ...defaultAdminConfig.transRates, ...(parsed.transRates || {}) }
+      };
+    }
+  } catch (e) {
+    console.error("Failed to load admin config:", e);
+  }
+}
+
+function saveAdminConfigToStorage() {
+  try {
+    localStorage.setItem('sr_admin_config', JSON.stringify(adminConfig));
+  } catch (e) {
+    console.error("Failed to save admin config:", e);
+  }
+}
+
+loadAdminConfig();
+
+
+/* ================================================================
    THEME
    ================================================================ */
 const themeToggle = document.getElementById('themeToggle');
@@ -171,6 +263,13 @@ function applyTranslations(lang) {
     const key = el.dataset.i18n;
     if (dict[key] !== undefined) {
       el.innerHTML = dict[key];
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (dict[key] !== undefined) {
+      el.placeholder = dict[key];
     }
   });
 }
@@ -343,47 +442,185 @@ function updateBuilderPriceChips() {
    PACKAGE MODALS
    ================================================================ */
 const packageData = {
-  honeymoon: {
-    title: 'Honeymoon Escape', duration: '5 Days / 4 Nights · Andaman',
-    image: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=1000&q=85',
-    highlights: ['Radhanagar Beach sunset walk','Candlelight dinner on the shore','Couple\'s spa session','Snorkeling at Elephant Beach','Cellular Jail light & sound show','Ross Island heritage boat tour','Premium couple accommodation','All transfers included'],
-    itinerary: ['Day 1: Arrival → Cellular Jail → Light Show','Day 2: Port Blair → Havelock ferry → Beach','Day 3: Elephant Beach snorkeling → Spa','Day 4: Radhanagar Beach sunrise','Day 5: Return Port Blair → Departure'],
-    price: 45000, unit: 'per couple',
+  explore_portblair: {
+    title: 'EXPLORE PORTBLAIR', duration: '3 Days / 2 Nights · Andaman',
+    image: 'images/pkg_explore_portblair.png',
+    pdf: 'images/PACKAGES/EXPLORE PORTBLAIR(3 DAYS).pdf',
+    highlights: ['Corbyn\'s Cove beach visit','Historic Cellular Jail visit','Cellular Jail Light & Sound show','Ross Island heritage tour','North Bay Island coral reef','Local shopping tour included'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail visit & Light Show',
+      'Day 2: Ross Island exploration → North Bay Island water activities → Local shopping',
+      'Day 3: Drop to Airport for departure'
+    ],
+    price: 12000, unit: 'per person',
   },
-  luxury: {
-    title: 'Luxury Island Retreat', duration: '7 Days / 6 Nights · Andaman + Goa',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85',
-    highlights: ['Private villa with ocean view','PADI scuba diving','Private speedboat island hop','7-course beachside dinner','North Goa nightlife experience','Private guide all excursions','5-star luxury resort in Goa','Sunset catamaran cruise'],
-    itinerary: ['Day 1-3: Andaman (Port Blair + Havelock + Neil)','Day 4: Fly Andaman → Goa (Business class)','Day 5-6: Goa — beaches, curated dining','Day 7: Luxury spa → Departure'],
-    price: 120000, unit: 'per couple',
+  escapade_andaman: {
+    title: 'ESCAPADE ANDAMAN', duration: '4 Days / 3 Nights · Andaman',
+    image: 'images/pkg_escapade_andaman.png',
+    pdf: 'images/PACKAGES/ESCAPADE ANDAMAN(4 DAYS).pdf',
+    highlights: ['Cellular Jail light & sound show','Havelock Island cruise trip','Radhanagar Beach sunset','Kalapathar Beach sightseeing','Local shopping tour','Corbyn\'s Cove beach visit'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail visit & Light Show',
+      'Day 2: Port Blair → Havelock Island by cruise → Radhanagar Beach sunset',
+      'Day 3: Kalapathar Beach → Return to Port Blair → Local shopping',
+      'Day 4: Drop to Airport for departure'
+    ],
+    price: 18000, unit: 'per person',
   },
-  adventure: {
-    title: 'Adventure Explorer', duration: '6 Days / 5 Nights · Andaman',
-    image: 'https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=1000&q=85',
-    highlights: ['PADI Open Water scuba certification','Sea walk at North Bay Island','Snorkeling at 3 reef locations','Island hopping × 3','Jet skiing, parasailing, banana boat','Andaman rainforest trek','Bioluminescent beach night walk','Glass-bottom boat ride'],
-    itinerary: ['Day 1: Arrival → North Bay snorkeling','Day 2: Scuba intro training','Day 3: Havelock → Open water dive','Day 4: Neil Island + Jolly Buoy','Day 5: Water sports + Biolum. beach','Day 6: Departure'],
-    price: 35000, unit: 'per person',
+  offbeat_andaman: {
+    title: 'OFFBEAT ANDAMAN', duration: '4 Days / 3 Nights · Andaman',
+    image: 'images/pkg_offbeat_andaman.png',
+    pdf: 'images/PACKAGES/OFFBEAT ANDAMAN(4 DAYS).pdf',
+    highlights: ['Jolly Buoy Island coral reef','Wandoor Beach marine park','Chidiyatapu Beach sunset','Munda Pahar scenic trek','Cellular Jail tour & show','Local shopping tour'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail tour & Light Show',
+      'Day 2: Wandoor Beach → Jolly Buoy Island day trip',
+      'Day 3: Chidiyatapu Beach → Munda Pahar scenic trek → Local shopping',
+      'Day 4: Drop to Airport for departure'
+    ],
+    price: 19500, unit: 'per person',
   },
-  budget: {
-    title: 'Budget Smart Trip', duration: '4 Days / 3 Nights · Goa',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=85',
-    highlights: ['North Goa: Baga, Calangute, Anjuna','South Goa: Benaulim, Colva, Palolem','Old Goa heritage + spice plantation','Goa dinner cruise','Budget hotel + breakfast','All AC transfers','Flea market tour','Dudhsagar waterfall day trip'],
-    itinerary: ['Day 1: Arrival → North Goa beaches','Day 2: Old Goa + spice plantation','Day 3: South Goa + Palolem sunset','Day 4: Dudhsagar → Departure'],
-    price: 15000, unit: 'per person',
+  paradise_pair: {
+    title: 'PARADISE PAIR HONEYMOON', duration: '4 Days / 3 Nights · Andaman',
+    image: 'images/pkg_paradise_pair.png',
+    pdf: 'images/PACKAGES/PARADISE PAIR HONEYMOON(4 DAYS).pdf',
+    highlights: ['Complimentary Candle Night dinner','Havelock Island romantic cruise','Radhanagar Beach sunset walk','Kalapathar Beach visit','Chidiyatapu Beach sunset','Cellular Jail visit & light show'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail & Light Show',
+      'Day 2: Port Blair → Havelock Island → Radhanagar Beach → Complimentary Candle Night dinner',
+      'Day 3: Kalapathar Beach → Return to Port Blair → Chidiyatapu Beach sunset',
+      'Day 4: Drop to Airport for departure'
+    ],
+    price: 38000, unit: 'per couple',
   },
-  family: {
-    title: 'Family Vacation Package', duration: '6 Days / 5 Nights · Andaman',
-    image: 'https://images.unsplash.com/photo-1559628233-100c798642d9?auto=format&fit=crop&w=1000&q=85',
-    highlights: ['Glass-bottom boat ride at North Bay','Cellular Jail historical tour + light show','Havelock family beach day','Snorkeling for kids','Andaman Water Sports Park','Ross & Viper Island tour','4-star resort with pool','All transfers + guide'],
-    itinerary: ['Day 1: Arrival → Corbyn\'s Cove → Marine Museum','Day 2: North Bay + Cellular Jail show','Day 3: Havelock ferry → Radhanagar','Day 4: Elephant Beach + water sports','Day 5: Ross & Viper + shopping','Day 6: Breakfast → Departure'],
-    price: 65000, unit: 'per family (2A+2C)',
+  island_bliss: {
+    title: 'ISLAND BLISS', duration: '5 Days / 4 Nights · Andaman',
+    image: 'images/pkg_island_bliss.png',
+    pdf: 'images/PACKAGES/ISLAND BLISS(5 DAYS).pdf',
+    highlights: ['Havelock & Neil Island cruise','Radhanagar Beach sunset','Bharatpur & Laxmanpur beaches','Natural Rock Formation Neil','Chidiyatapu Beach visit','Cellular Jail visit & light show'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail & Light Show',
+      'Day 2: Port Blair → Havelock Island → Radhanagar Beach sunset',
+      'Day 3: Kalapathar Beach → Neil Island cruise → Bharatpur & Laxmanpur beaches & Natural Rock Formation',
+      'Day 4: Return to Port Blair → Chidiyatapu Beach → Local shopping',
+      'Day 5: Drop to Airport for departure'
+    ],
+    price: 25000, unit: 'per person',
+  },
+  island_treasures: {
+    title: 'ISLAND TREASURES', duration: '5 Days / 4 Nights · Andaman',
+    image: 'images/pkg_island_treasures.png',
+    pdf: 'images/PACKAGES/ISLAND TREASURES(5 DAYS).pdf',
+    highlights: ['Baratang Island roadtrip','Limestone Cave exploration','Tropical forest road safari','Wandoor Beach & Collinpur Beach','Ross Island & North Bay Island','Kurmadera Beach visit'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail visit & Light Show',
+      'Day 2: North Bay Island → Ross Island exploration',
+      'Day 3: Wandoor Beach → Collinpur Beach → Kurmadera Beach',
+      'Day 4: Roadtrip to Baratang (tropical forest) → Limestone Cave → Return Port Blair → Local shopping',
+      'Day 5: Drop to Airport for departure'
+    ],
+    price: 24000, unit: 'per person',
+  },
+  tidal_romance: {
+    title: 'TIDAL ROMANCE HONEYMOON', duration: '5 Days / 4 Nights · Andaman',
+    image: 'images/pkg_tidal_romance.png',
+    pdf: 'images/PACKAGES/TIDAL ROMANCE HONEYMOON(5 DAYS).pdf',
+    highlights: ['Complimentary Scuba Diving','Complimentary Candle Night dinner','Elephanta Beach coral reef','Radhanagar & Kalapathar beaches','Chidiyatapu Beach sunset','Cellular Jail tour & show'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail & Light Show',
+      'Day 2: Port Blair → Havelock Island → Radhanagar Beach sunset',
+      'Day 3: Havelock Island → Complimentary Scuba Diving & Elephanta Beach → Kalapathar Beach → Candle Night dinner',
+      'Day 4: Return back to Port Blair → Chidiyatapu Beach sunset',
+      'Day 5: Drop to Airport for departure'
+    ],
+    price: 48000, unit: 'per couple',
+  },
+  andaman_odyssey: {
+    title: 'ANDAMAN ODYSSEY', duration: '6 Days / 5 Nights · Andaman',
+    image: 'images/pkg_andaman_odyssey.png',
+    pdf: 'images/PACKAGES/ANDAMAN ODYSSEY(6 DAYS).pdf',
+    highlights: ['Havelock & Neil Island cruise','Radhanagar Beach sunset','Elephanta Beach water sports','Bharatpur & Laxmanpur beaches','Natural Rock Formation Neil','Chidiyatapu Beach & shopping'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail & Light Show',
+      'Day 2: Port Blair → Havelock Island → Radhanagar Beach sunset',
+      'Day 3: Havelock Island → Elephanta Beach & Kalapathar Beach',
+      'Day 4: Neil Island cruise → Bharatpur Beach → Laxmanpur Beach & Natural Rock Formation → Return Port Blair',
+      'Day 5: Chidiyatapu Beach → Local shopping tour',
+      'Day 6: Drop to Airport for departure'
+    ],
+    price: 29000, unit: 'per person',
+  },
+  romantic_retreats: {
+    title: 'ROMANTIC RETREATS HONEYMOON', duration: '6 Days / 5 Nights · Andaman',
+    image: 'images/pkg_romantic_retreats.png',
+    pdf: 'images/PACKAGES/ROMANTIC RETREATS HONEYMOON(6 DAYS).pdf',
+    highlights: ['Complimentary Scuba Diving','Complimentary Candle Night dinner','Havelock & Neil Island cruise','Radhanagar & Kalapathar beaches','Laxmanpur Beach sunset','Chidiyatapu Beach sunset & shopping'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail & Light Show',
+      'Day 2: Port Blair → Havelock Island → Radhanagar Beach sunset → Kalapathar Beach',
+      'Day 3: Havelock Island → Complimentary Scuba Diving & Elephanta Beach → Candle Night dinner',
+      'Day 4: Neil Island cruise → Bharatpur Beach → Laxmanpur Beach sunset & Natural Rock Formation',
+      'Day 5: Return to Port Blair → Chidiyatapu Beach → Local shopping',
+      'Day 6: Drop to Airport for departure'
+    ],
+    price: 58000, unit: 'per couple',
+  },
+  andaman_aura: {
+    title: 'ANDAMAN AURA', duration: '7 Days / 6 Nights · Andaman',
+    image: 'images/pkg_andaman_aura.png',
+    pdf: 'images/PACKAGES/ANDAMAN AURA(7 DAYS).pdf',
+    highlights: ['Baratang Island roadtrip','Limestone Cave exploration','Havelock & Neil Island cruise','Radhanagar Beach sunset','Elephanta Beach water sports','Bharatpur & Laxmanpur beaches','Natural Rock Formation Neil'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail & Light Show',
+      'Day 2: Port Blair → Havelock Island → Radhanagar Beach sunset',
+      'Day 3: Havelock Island → Elephanta Beach & Kalapathar Beach',
+      'Day 4: Neil Island cruise → Bharatpur Beach → Laxmanpur Beach & Natural Rock Formation',
+      'Day 5: Return to Port Blair → Local shopping tour',
+      'Day 6: Tropical Roadtrip to Baratang → Limestone Cave → Return to Port Blair',
+      'Day 7: Drop to Airport for departure'
+    ],
+    price: 34000, unit: 'per person',
+  },
+  seasoul_sojourn: {
+    title: 'SEASOUL SOJOURN', duration: '8 Days / 7 Nights · Andaman',
+    image: 'images/pkg_seasoul_sojourn.png',
+    pdf: 'images/PACKAGES/SEASOUL SOJOURN(8 DAYS).pdf',
+    highlights: ['Baratang Island roadtrip','Limestone Cave exploration','Ross Island & North Bay tour','Havelock & Neil Island cruise','Radhanagar Beach sunset','Elephanta Beach water sports','Bharatpur & Laxmanpur beaches','Natural Rock Formation Neil'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail & Light Show',
+      'Day 2: Port Blair → Havelock Island → Radhanagar Beach sunset',
+      'Day 3: Havelock Island → Elephanta Beach & Kalapathar Beach',
+      'Day 4: Neil Island cruise → Bharatpur Beach → Laxmanpur Beach & Natural Rock Formation',
+      'Day 5: Return to Port Blair → Local resort stay',
+      'Day 6: Ross Island exploration → North Bay Island tour → Local shopping',
+      'Day 7: Tropical Roadtrip to Baratang → Limestone Cave → Return to Port Blair',
+      'Day 8: Drop to Airport for departure'
+    ],
+    price: 39000, unit: 'per person',
+  },
+  ethereal_isles: {
+    title: 'ETHEREAL ISLES', duration: '9 Days / 8 Nights · Andaman',
+    image: 'images/pkg_ethereal_isles.png',
+    pdf: 'images/PACKAGES/ETHEREAL ISLES(9 DAYS).pdf',
+    highlights: ['Middle & North Andaman tour','Rangat & Diglipur roadtrip','Ross & Smith Island beach','Dhaninallah & Morichedera beaches','Havelock & Neil Island cruise','Radhanagar Beach sunset','Limestone Cave Baratang'],
+    itinerary: [
+      'Day 1: Arrival → Corbyn\'s Cove beach → Cellular Jail & Light Show',
+      'Day 2: Depart to Middle Andaman (Rangat) → Dhaninallah beach → Stay Rangat',
+      'Day 3: Visit Morichedera beach → Diglipur → Kalipur beach → Stay Diglipur',
+      'Day 4: Visit Ross & Smith twin beach → Stay Diglipur',
+      'Day 5: Return to Port Blair → Chidiyatapu beach',
+      'Day 6: Depart towards Havelock → Radhanagar beach sunset',
+      'Day 7: Kalapathar Beach → Neil Island cruise → Bharatpur & Laxmanpur beaches & Natural Rock Formation',
+      'Day 8: Return to Port Blair → Local shopping tour',
+      'Day 9: Drop to Airport for departure'
+    ],
+    price: 46000, unit: 'per person',
   },
 };
 
 window.openPackageModal = function(key) {
   const pkg = packageData[key];
   if (!pkg) return;
-  const priceDisplay = formatCurrency(pkg.price);
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-img" style="background-image:url('${pkg.image}')"></div>
     <div class="modal-body">
@@ -393,13 +630,29 @@ window.openPackageModal = function(key) {
       <ul class="modal-highlights">${pkg.highlights.map(h=>`<li>${h}</li>`).join('')}</ul>
       <div class="modal-section-title">Itinerary</div>
       <ul class="modal-highlights">${pkg.itinerary.map(i=>`<li>${i}</li>`).join('')}</ul>
-      <div class="modal-price-row">
-        <div>
-          <div class="modal-price-note">Starting from</div>
-          <div class="modal-price-val">${priceDisplay} <small>${pkg.unit}</small></div>
+      ${adminConfig.cashModeEnabled ? `
+      <div class="modal-price-info" style="text-align: center; margin-bottom: 20px;">
+        <span style="font-size: 0.9rem; color: var(--text-3); display: block; margin-bottom: 2px;">Starting from</span>
+        <div style="font-size: 1.8rem; font-weight: 700; color: var(--yellow); line-height: 1.2;">
+          ${formatCurrency(adminConfig.packagePrices[key] || pkg.price)}
+          <span style="font-size: 0.9rem; font-weight: 400; color: var(--text-3);">/ ${pkg.unit}</span>
         </div>
-        <a href="#builder" class="btn btn-primary" onclick="closePackageModal()">Customize This Trip</a>
       </div>
+      ` : ''}
+      <div class="modal-price-row" style="justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="https://wa.me/918073740495?text=Hi!%20I%20am%20interested%20in%20the%20${encodeURIComponent(pkg.title)}%20package." class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;" target="_blank">
+          <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          <span data-i18n="btn_enquire_whatsapp">Enquire on WhatsApp</span>
+        </a>
+        <a href="#builder" class="btn btn-outline-dark" onclick="closePackageModal()" data-i18n="btn_customize_trip">Customize Trip</a>
+      </div>
+      ${pkg.pdf ? `
+      <div style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+        <a href="${pkg.pdf}" class="btn btn-outline-dark btn-full" style="display: flex; align-items: center; justify-content: center; gap: 8px;" download target="_blank">
+          <span>📄</span> Download Detailed PDF Itinerary
+        </a>
+      </div>
+      ` : ''}
     </div>`;
   document.getElementById('packageModal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -411,9 +664,31 @@ window.closePackageModal = function(e) {
   document.body.style.overflow = '';
 };
 
+window.openLegalModal = function(type) {
+  const dict = (window.SR_TRANSLATIONS || {})[currentLang] || (window.SR_TRANSLATIONS || {})['en'];
+  const title = dict[type + '_title'] || (type === 'privacy' ? 'Privacy Policy' : 'Terms & Conditions');
+  const body = dict[type + '_body'] || '';
+  
+  document.getElementById('legalModalContent').innerHTML = `
+    <h2 style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; margin-bottom: 20px; color: var(--text-1); border-bottom: 2px solid var(--yellow); padding-bottom: 10px;">${title}</h2>
+    <div style="font-size: 0.95rem; color: var(--text-2);">
+      ${body}
+    </div>
+  `;
+  document.getElementById('legalModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeLegalModal = function(e) {
+  if (e && e.target !== document.getElementById('legalModal')) return;
+  document.getElementById('legalModal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     window.closePackageModal();
+    window.closeLegalModal();
     closeLightbox();
     closeExitPopup();
     closeAIPlanner();
@@ -671,10 +946,10 @@ if (customRequestEl) customRequestEl.addEventListener('input', () => { state.cus
 /* ================================================================
    PRICING ENGINE V3 — ITEMIZED BREAKDOWN
    ================================================================ */
-const ACCOM_PRICE_INR = { budget: 4000, premium: 9000, luxury: 20000, villa: 45000 };
+const ACCOM_PRICE_INR = { homestay: 1750, budget: 4000, premium: 9000, luxury: 20000, villa: 45000 };
 const GUIDE_PER_DAY = 3500;
 const CONCIERGE_PER_DAY = 8000;
-const BASE_PER_NIGHT = { andaman: 5000, goa: 3500 };
+const BASE_PER_NIGHT = { andaman: 5000 };
 
 function computeBreakdown() {
   const nights = Math.max(1, state.nights);
@@ -682,30 +957,28 @@ function computeBreakdown() {
   const children = state.children;
 
   // Stay
-  const accomRate = ACCOM_PRICE_INR[state.accommodation] || 0;
-  const baseRate = BASE_PER_NIGHT[state.destination] || 0;
+  const accomRate = adminConfig.accomRates[state.accommodation] || 0;
+  const baseRate = adminConfig.baseRate || 0;
   const stayTotal = (accomRate + baseRate) * nights;
 
   // Activities
   let actTotal = 0;
   state.activities.forEach(act => {
-    actTotal += act.price * adults + act.price * 0.5 * children;
+    const actRate = adminConfig.actRates[act.value] || 0;
+    actTotal += actRate * adults + actRate * 0.5 * children;
   });
 
   // Transport
   let transTotal = 0;
   if (state.transport) {
-    if (state.transport === 'cab') transTotal = state.transportPrice;
-    else transTotal = state.transportPrice * (adults + children);
+    const transRate = adminConfig.transRates[state.transport] || 0;
+    if (state.transport === 'cab') transTotal = transRate;
+    else transTotal = transRate * (adults + children);
   }
 
   // Add-ons
   let aoTotal = 0;
-  state.addons.forEach(ao => {
-    if (ao.value === 'guide') aoTotal += GUIDE_PER_DAY * nights;
-    else if (ao.value === 'concierge') aoTotal += CONCIERGE_PER_DAY * nights;
-    else aoTotal += ao.price;
-  });
+  // All add-ons are price on request (charges extra) and contribute 0 to the base price estimate.
 
   const total = stayTotal + actTotal + transTotal + aoTotal;
 
@@ -740,12 +1013,25 @@ function animatePrice(targetINR) {
 
 function updateBreakdownPanel(breakdown) {
   const { stayTotal, actTotal, transTotal, aoTotal } = breakdown;
+  const dict = (window.SR_TRANSLATIONS || {})[currentLang] || (window.SR_TRANSLATIONS || {})['en'];
 
-  function setVal(id, val) {
+  function setVal(id, val, isAddon = false) {
     const el = document.getElementById(id);
     if (!el) return;
-    if (val > 0) {
-      el.textContent = formatCurrency(val);
+    if (val > 0 || (isAddon && state.addons.length > 0)) {
+      if (adminConfig.cashModeEnabled) {
+        if (isAddon) {
+          el.textContent = dict.ao_extra_charge || 'Charges extra';
+        } else {
+          el.textContent = formatCurrency(val);
+        }
+      } else {
+        if (isAddon) {
+          el.textContent = dict.ao_extra_charge || 'Charges extra';
+        } else {
+          el.textContent = dict.price_on_request || 'Enquire Now';
+        }
+      }
       el.classList.add('has-value');
     } else {
       el.textContent = '—';
@@ -756,18 +1042,18 @@ function updateBreakdownPanel(breakdown) {
   setVal('cbStayVal', stayTotal);
   setVal('cbActVal', actTotal);
   setVal('cbTransVal', transTotal);
-  setVal('cbAoVal', aoTotal);
+  setVal('cbAoVal', aoTotal, true);
 }
 
 function updateSummaryItems(breakdown) {
   const el = document.getElementById('summaryItems');
   if (!el) return;
 
-  const ACCOM_LABELS = { budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
+  const ACCOM_LABELS = { homestay: 'Homestay / Hostel', budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
   const TRANS_LABELS = { flight: '✈️ Flights', ferry: '⛴️ Ferry', cab: '🚗 Private Cab' };
 
   const items = [];
-  if (state.destination) items.push({ l: '📍 Destination', v: state.destination === 'andaman' ? 'Andaman' : 'Goa' });
+  items.push({ l: '📍 Destination', v: 'Andaman' });
   if (state.nights) items.push({ l: '🌙 Duration', v: `${state.nights} night${state.nights > 1 ? 's' : ''}` });
   if (state.adults) {
     let tv = `${state.adults} adult${state.adults !== 1 ? 's' : ''}`;
@@ -803,10 +1089,10 @@ function recalcPrice() {
    Structured, emoji-rich, fully encoded. Handles all edge cases.
    ================================================================ */
 
-const WA_NUMBER = '919531817142'; // Admin WhatsApp number
+const WA_NUMBER = '918073740495'; // Admin WhatsApp number
 
 /* Labels for human-readable output */
-const WA_ACCOM_LABELS  = { budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
+const WA_ACCOM_LABELS  = { homestay: 'Homestay / Hostel', budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
 const WA_TRANS_LABELS  = { flight: 'Flights (round-trip)', ferry: 'Ferry', cab: 'Private Cab' };
 
 /* Build the full structured WhatsApp message from builder state */
@@ -820,7 +1106,7 @@ function buildWaMessage() {
     const basic =
 `🌍 *New Trip Inquiry — Seven Rays*
 
-Hi! I'm interested in planning a trip to Andaman or Goa.
+Hi! I'm interested in planning a trip to Andaman.
 Could you please help me with options and pricing?
 
 📩 Looking forward to hearing from you! 🙏`;
@@ -834,9 +1120,7 @@ Could you please help me with options and pricing?
   lines.push('');
 
   // Destination
-  if (state.destination) {
-    lines.push(`📍 *Destination:* ${state.destination === 'andaman' ? 'Andaman' : 'Goa'}`);
-  }
+  lines.push(`📍 *Destination:* Andaman`);
 
   // Duration
   if (state.nights) {
@@ -892,7 +1176,11 @@ Could you please help me with options and pricing?
   // Estimated total (only show if non-zero)
   if (bd.total > 0) {
     lines.push('');
-    lines.push(`💵 *Estimated Total:* ${formatCurrency(bd.total)}`);
+    if (adminConfig.cashModeEnabled) {
+      lines.push(`💵 *Estimated Total:* ${formatCurrency(bd.total)}`);
+    } else {
+      lines.push(`💵 *Estimated Total:* Price on Request`);
+    }
   }
 
   lines.push('');
@@ -910,7 +1198,7 @@ window.openWhatsApp = function(context) {
     encoded = buildWaMessage();
   } else {
     // Generic contact message — no builder data needed
-    const general = '🌍 *Hello Seven Rays!*\n\nI\'d like to learn more about your Andaman & Goa travel packages.\nCould you please share the details? 🙏';
+    const general = '🌍 *Hello Seven Rays!*\n\nI\'d like to learn more about your Andaman travel packages.\nCould you please share the details? 🙏';
     encoded = encodeURIComponent(general);
   }
   window.open(`https://wa.me/${WA_NUMBER}?text=${encoded}`, '_blank');
@@ -1012,25 +1300,19 @@ async function callOpenAI(messages) {
 }
 
 /* — System Prompt — */
-const AI_SYSTEM_PROMPT = `You are an expert luxury travel planner for Seven Rays Travel Agency, specializing in Andaman & Goa.
+const AI_SYSTEM_PROMPT = `You are an expert luxury travel planner for Seven Rays Travel Agency, specializing in the Andaman Islands.
 
 When the user asks for a trip plan, respond with exactly TWO sections:
 
 1. A JSON block wrapped in <PLAN_JSON>...</PLAN_JSON> with this exact schema:
 {
-  "destination": "andaman" or "goa",
+  "destination": "andaman",
   "nights": <number 3-14>,
-  "accommodation": "budget" or "premium" or "luxury" or "villa",
-  "activities": [list from: "scuba","snorkel","island","dinner","watersports","nightlife","seawalk","kayak","glassbottom","trek"],
-  "addons": [list from: "photo","decor","guide","honeymoon","birthday","proposal","beachdinner","yacht","spa","drone","underwater","bonfire","yoga","vip","concierge","foodtour","cultural","biolum"]
+  "accommodation": "budget" or "premium" or "luxury" or "villa" or "homestay",
+  "activities": [list from: "scuba","snorkel","island","dinner","watersports","seawalk","kayak","glassbottom","trek"],
+  "addons": [list from: "photo","decor","guide","honeymoon","birthday","proposal","beachdinner","yacht","spa","drone","underwater","bonfire","yoga","concierge"]
 }
 Only include activities and addons relevant to the trip type.
-
-For GOA trips:
-- Activities: watersports, nightlife, dinner, snorkel
-- Key beaches: Baga, Anjuna, Palolem, Calangute
-- Add-ons: vip (club), beachdinner, bonfire, foodtour, cultural, spa
-- Highlights: North Goa nightlife, South Goa calm, Portuguese heritage, Dudhsagar waterfall
 
 For ANDAMAN trips:
 - Activities: scuba, snorkel, island, seawalk, kayak, glassbottom, trek
@@ -1040,8 +1322,7 @@ For ANDAMAN trips:
 
 2. After the JSON block, a warm, day-by-day itinerary in plain text (no JSON, no markdown headers).
 
-Always detect destination from user message — look for keywords like "goa", "baga", "anjuna", "palolem" for Goa, and "andaman", "havelock", "neil" for Andaman.
-If unclear, ask: "Which destination interests you — Andaman or Goa?"
+Always focus on the Andaman Islands. If the user mentions Goa, politely inform them that Seven Rays currently specializes exclusively in premium Andaman experiences.
 Be warm, specific, and knowledgeable. Include local tips and hidden gems.
 Suggest upgrades when appropriate: "Would you prefer a luxury stay for a more premium experience?"`;
 
@@ -1180,9 +1461,9 @@ aiInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey)
 function updateAIStatePreview() {
   const el = document.getElementById('aiStatePreview');
   if (!el) return;
-  const ACCOM = { budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
+  const ACCOM = { homestay: 'Homestay / Hostel', budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
   const chips = [];
-  if (state.destination) chips.push(`📍 ${state.destination === 'andaman' ? 'Andaman' : 'Goa'}`);
+  chips.push(`📍 Andaman`);
   if (state.nights) chips.push(`🌙 ${state.nights} nights`);
   if (state.adults) chips.push(`👥 ${state.adults} adults${state.children ? ` + ${state.children} children` : ''}`);
   if (state.budget) chips.push(`💰 ${formatCurrency(state.budget)}`);
@@ -1248,8 +1529,8 @@ window.generateAutoPlan = async function() {
 };
 
 function buildAutoPrompt() {
-  const ACCOM = { budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
-  const dest = state.destination === 'goa' ? 'Goa' : state.destination === 'andaman' ? 'Andaman' : 'Andaman or Goa';
+  const ACCOM = { homestay: 'Homestay / Hostel', budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
+  const dest = 'Andaman';
   const acts = state.activities.length ? state.activities.map(a => a.label).join(', ') : 'not specified';
   const aos = state.addons.length ? state.addons.map(a => a.label).join(', ') : 'none';
   const stay = ACCOM[state.accommodation] || 'not specified';
@@ -1273,7 +1554,7 @@ function renderAutoPlanHTML(itinerary, plan) {
     <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:20px;gap:10px;flex-wrap:wrap">
       <div>
         <h3 style="font-family:var(--font-serif);color:var(--text-1);font-size:1.2rem;margin-bottom:6px">✨ Your AI-Generated Plan</h3>
-        <p style="font-size:0.82rem;color:var(--text-3)">${state.destination ? (state.destination === 'andaman' ? 'Andaman' : 'Goa') : 'Custom'} · ${state.nights} Nights · GPT-4 Powered</p>
+        <p style="font-size:0.82rem;color:var(--text-3)">Andaman · ${state.nights} Nights · GPT-4 Powered</p>
       </div>
       ${plan ? `<button class="btn btn-primary btn-sm" onclick="applyAIPlanToBuilder(${JSON.stringify(plan)})">Apply to Builder</button>` : ''}
     </div>
@@ -1284,7 +1565,7 @@ function renderAutoPlanHTML(itinerary, plan) {
       return `<div class="ai-plan-day"><div class="ai-plan-day-title">${title}</div><p>${detail}</p></div>`;
     }).join('') : `<div class="ai-plan-day"><p style="white-space:pre-line">${itinerary}</p></div>`}
     <div style="margin-top:16px;padding:14px;background:var(--yellow-glow);border-radius:12px;border:1px solid rgba(212,160,23,0.3)">
-      <p style="font-size:0.82rem;color:var(--text-1)">💡 <strong>Pro tip by Seven Rays:</strong> Book ferries to Havelock 48hrs in advance during peak season (Oct–Mar). For Goa, shoulder season (Feb–Mar) offers best value!</p>
+      <p style="font-size:0.82rem;color:var(--text-1)">💡 <strong>Pro tip by Seven Rays:</strong> Book ferries to Havelock 48hrs in advance during peak season (Oct–Mar) for a hassle-free island hopping experience.</p>
     </div>
     <button class="btn btn-outline-dark btn-full" style="margin-top:16px" onclick="window.getMyPlan()">Send This Plan on WhatsApp 🚀</button>
   </div>`;
@@ -1366,37 +1647,10 @@ function generateSmartFallback(input) {
   const isLuxury = /luxury|villa|premium|high.end|exclusive/.test(lower);
   const isGoa = /goa/.test(lower);
   const isAndaman = /andaman/.test(lower);
-  const isParty = /party|nightlife|club|rave|beach party/.test(lower);
-  const dest = isGoa ? 'Goa' : isAndaman ? 'Andaman' : 'Andaman (most popular)';
+  const dest = 'Andaman';
 
-  if (isParty && isGoa) {
-    return `🎉 Goa Party Experience!\n\n📍 Destination: Goa\n📅 Recommended: 4–5 nights\n🛎 Stay: Premium Hotel near North Goa\n🎯 Activities: Beach parties, water sports, sunset cruise\n✨ Add-ons: VIP Club Access, Beach Bonfire, DJ Night\n💰 Est. Budget: ₹25,000–₹50,000/person\n\n🌊 Best spots: Baga, Anjuna, Vagator, Tito's Lane. The Sunburn Festival (Dec) is legendary!\n\nShall I create a detailed day plan? Just tell me your travel dates!`;
-  }
-
-  // GOA general — catches all Goa queries not already handled above
   if (isGoa) {
-    const goaStyle = isLuxury ? 'Luxury' : isAdventure ? 'Adventure' : isHoneymoon ? 'Romantic' : isFamily ? 'Family' : 'Premium';
-    const goaAccom = isLuxury ? '"villa"' : isHoneymoon ? '"luxury"' : '"premium"';
-    const goaAddons = isHoneymoon
-      ? '["honeymoon","beachdinner","spa","photo"]'
-      : isLuxury
-      ? '["yacht","vip","spa","beachdinner","concierge"]'
-      : '["beachdinner","foodtour","bonfire","cultural"]';
-    return `<PLAN_JSON>{"destination":"goa","nights":4,"accommodation":${goaAccom},"activities":["watersports","dinner","nightlife","snorkel"],"addons":${goaAddons}}</PLAN_JSON>
-
-🌴 ${goaStyle} Goa Escape!
-
-Day 1: Arrival → Check in near North Goa. Evening stroll at Calangute Beach. Sunset drinks at a cliffside shack. Dinner with live Goan music.
-
-Day 2: Baga Beach watersports (jet ski, banana boat, parasailing). Afternoon: Anjuna flea market or Fort Aguada. Evening: Vibrant nightlife on Tito’s Lane.${isHoneymoon ? '\n🌹 Surprise honeymoon setup waiting in your room!' : ''}
-
-Day 3: South Goa Serenity — Palolem & Benaulim beaches. Scenic boat tour of Palolem lagoon. Guided food tour with vindaloo, xacuti & bebinca. Candlelight beach dinner at sunset.
-
-Day 4: Old Goa heritage — Basilica of Bom Jesus (UNESCO), spice plantation tour with traditional Goan thali. Afternoon beach bonfire. Departure.
-
-Est. Budget: ₹${isLuxury ? '80,000–1,50,000' : isHoneymoon ? '50,000–1,00,000' : '20,000–45,000'}/person
-
-💡 Tip: Feb–Mar is Goa’s golden season — clear skies, warm sea, perfect beach vibes!`;
+    return `🌴 Seven Rays currently focuses exclusively on crafting premium, luxury travel experiences in the Andaman Islands.\n\nWe would be delighted to plan an unforgettable Andaman escape for you! Let me know if you would like a romantic, family, or adventure-focused Andaman itinerary.`;
   }
 
   if (isHoneymoon) {
@@ -1483,23 +1737,7 @@ Est. Budget: ₹35,000–₹65,000/person
 🌊 Andaman has some of Asia's best dive sites — visibility up to 30m!`;
   }
 
-  if (isGoa && !isHoneymoon && !isFamily && !isLuxury && !isAdventure && !isParty) {
-    return `<PLAN_JSON>{"destination":"goa","nights":4,"accommodation":"premium","activities":["watersports","dinner","nightlife","snorkel"],"addons":["beachdinner","foodtour","bonfire","cultural"]}</PLAN_JSON>
-
-🌴 Your Goa Escape Plan!
-
-Day 1: Arrival → Check in near North Goa. Evening stroll at Calangute Beach. Sunset drinks at a cliffside shack. Dinner with live Goan music.
-
-Day 2: North Goa Highlights — Baga Beach watersports (jet ski, banana boat, parasailing). Afternoon: Anjuna flea market. Evening: Nightlife on Tito's Lane.
-
-Day 3: South Goa Serenity — Palolem & Benaulim beaches. Boat tour of Palolem lagoon. Guided food tour — try vindaloo, xacuti & bebinca. Candlelight beach dinner at sunset.
-
-Day 4: Old Goa heritage — Basilica of Bom Jesus (UNESCO), spice plantation tour with authentic Goan thali. Afternoon beach bonfire. Departure.
-
-Est. Budget: ₹20,000–₹45,000/person
-
-💡 Tip: Shoulder season (Feb–Mar) offers the best weather in Goa — warm, dry, and less crowded!`;
-  }
+  // Goa fallback already handled
 
   // Default response
   return `🌏 I'd love to help plan your trip to ${dest}!
@@ -1515,7 +1753,7 @@ Feel free to also use the "Auto Plan" tab — I'll use your builder selections t
 
 /* Built-in auto plan (no API key) */
 function renderBuiltinAutoPlan() {
-  const dest = state.destination === 'goa' ? 'Goa' : 'Andaman';
+  const dest = 'Andaman';
   const nights = state.nights || 5;
   const adults = state.adults || 2;
   const budget = formatCurrency(state.budget || 75000);
@@ -1533,15 +1771,7 @@ function renderBuiltinAutoPlan() {
     { d: 6, t: 'Farewell Port Blair', c: `Return ferry. Shopping at Aberdeen Market (pearls, shells, local crafts).${hasYacht ? '\n🛥️ Private yacht sunset cruise as a grand farewell!' : ''} Departure evening.` },
   ];
 
-  const goaDays = [
-    { d: 1, t: 'Arrival & North Goa', c: `Airport → hotel. Evening: Calangute & Baga Beach. Sunset cocktails. Dinner at a shack near the sea — try peri-peri prawns!` },
-    { d: 2, t: 'Heritage & Spices', c: `Morning: Old Goa churches (Basilica of Bom Jesus — UNESCO World Heritage). Afternoon: Spice plantation with traditional Goan thali lunch. Evening: Anjuna flea market browsing.` },
-    { d: 3, t: 'South Goa Calm', c: `Drive to South Goa — Palolem → Colva → Benaulim. Quieter, more pristine beaches. Boat lagoon tour at Palolem.${hasHoneymoon ? '\n🌹 Romantic setup on the beach in the evening.' : ''}` },
-    { d: 4, t: 'Adventure & Party', c: `Water sports at Baga: jet ski, parasailing, banana boat.${hasYacht ? '\n🛥️ Private yacht cruise along the coastline!' : ''} Sunset catamaran cruise included. Evening: Goa nightlife experience.` },
-    { d: 5, t: 'Dudhsagar & Departure', c: `Half-day: Dudhsagar Waterfall (350m — spectacular). Return by noon. Afternoon: Last beach time, souvenir shopping. Departure.` },
-  ];
-
-  const rawDays = dest === 'Andaman' ? andamanDays : goaDays;
+  const rawDays = andamanDays;
   const days = rawDays.slice(0, Math.min(nights + 1, rawDays.length));
 
   return `<div style="padding:20px">
@@ -1640,14 +1870,7 @@ function buildLb() {
   });
 }
 
-document.querySelectorAll('.gal-item').forEach(item => {
-  item.addEventListener('click', () => {
-    buildLb();
-    const visible = [...document.querySelectorAll('.gal-item:not(.hidden)')];
-    lbIdx = visible.indexOf(item);
-    openLb(lbIdx);
-  });
-});
+// Dynamic click handlers attached during gallery init
 
 function openLb(idx) {
   buildLb();
@@ -1706,7 +1929,7 @@ window.submitPopupLead = function() {
   const phone = document.getElementById('popupPhone')?.value.trim();
   if (!name || !phone) { showToast('Please enter your name and phone number', 'warning'); return; }
   const msg = encodeURIComponent(`Hi Seven Rays! 👋\n\nFree consultation request:\n👤 Name: ${name}\n📞 Phone: ${phone}\n\nPlease reach out! 🙏`);
-  window.open(`https://wa.me/919800000000?text=${msg}`, '_blank');
+  window.open(`https://wa.me/918073740495?text=${msg}`, '_blank');
   closeExitPopup();
 };
 
@@ -1734,20 +1957,35 @@ function updateWAPosition() {
   }
 }
 
+let scrollTimeout = null;
+let builderVisible = false;
+
 window.addEventListener('scroll', () => {
   const past = window.scrollY > 350;
   if (waFloat) waFloat.style.opacity = past ? '1' : '0';
+
   if (mobileFAB) {
-    if (past) {
-      mobileFAB.style.display = 'block';
+    if (past && !builderVisible) {
       mobileFAB.classList.remove('hidden');
       fabCurrentlyVisible = true;
+      updateWAPosition();
+
+      // Clear any existing scroll timeout
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+
+      // Fade out after 3 seconds of scroll inactivity
+      scrollTimeout = setTimeout(() => {
+        mobileFAB.classList.add('hidden');
+        fabCurrentlyVisible = false;
+        updateWAPosition();
+      }, 3000);
     } else {
+      if (scrollTimeout) clearTimeout(scrollTimeout);
       mobileFAB.classList.add('hidden');
       fabCurrentlyVisible = false;
+      updateWAPosition();
     }
   }
-  updateWAPosition();
 }, { passive: true });
 
 window.addEventListener('resize', updateWAPosition, { passive: true });
@@ -1757,15 +1995,13 @@ const builderSec = document.getElementById('builder');
 if (builderSec && mobileFAB) {
   new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
+      builderVisible = entry.isIntersecting;
+      if (builderVisible) {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
         mobileFAB.classList.add('hidden');
         fabCurrentlyVisible = false;
-      } else if (window.scrollY > 350) {
-        mobileFAB.style.display = 'block';
-        mobileFAB.classList.remove('hidden');
-        fabCurrentlyVisible = true;
+        updateWAPosition();
       }
-      updateWAPosition();
     });
   }, { threshold: 0.1 }).observe(builderSec);
 }
@@ -1788,14 +2024,7 @@ const SITE_IMAGES = {
     primary: 'images/dest_neil.png', // Natural rock / calm sea
     fallback: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=90'
   },
-  'dest-north-goa': {
-    primary: 'images/dest_north_goa.png', // Vibrant beach/nightlife vibe
-    fallback: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1600&q=90'
-  },
-  'dest-south-goa': {
-    primary: 'images/dest_south_goa.png', // Serene, empty coastline
-    fallback: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=90'
-  },
+
 
   // --- Packages ---
   'pkg-luxury': {
@@ -1837,21 +2066,297 @@ function initSectionImages() {
 /* ================================================================
    INIT
    ================================================================ */
+const GALLERY_IMAGES = [
+  "WhatsApp Image 2026-06-25 at 19.50.17.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.18.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.19.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.20.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.22.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.23.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.25.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.26.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.27.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.37.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.45.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.46.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.47.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.49 (1).jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.49.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.50.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.51.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.52.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.50.54.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.10.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.12 (1).jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.12.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.14.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.15.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.17.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.18.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.19.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.22.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.24.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.25.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.27 (1).jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.27.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.30 (1).jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.30.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.32.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.34.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.35.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.36.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.38.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.39.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.42.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.43.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.46.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.47.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.50.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.51.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.52.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.53.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.54.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.55.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.58.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.51.59.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.01.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.02.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.03.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.04.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.05.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.07.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.09.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.10.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.12.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.13.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.15.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.34.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.37.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.39.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.44.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.45.jpeg",
+  "WhatsApp Image 2026-06-25 at 19.52.46.jpeg"
+];
+
+function initDynamicPackages() {
+  const grid = document.querySelector('.packages-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const badges = {
+    explore_portblair: { text: 'Best Value', class: 'badge--green' },
+    escapade_andaman: { text: 'Popular', class: 'badge--blue' },
+    offbeat_andaman: { text: 'Adventure', class: 'badge--blue' },
+    paradise_pair: { text: 'Honeymoon', class: 'badge--rose' },
+    island_bliss: { text: 'Trending', class: 'badge--teal' },
+    island_treasures: { text: 'Explorer', class: 'badge--gold' },
+    tidal_romance: { text: 'Honeymoon', class: 'badge--rose' },
+    andaman_odyssey: { text: 'Classic', class: 'badge--teal' },
+    romantic_retreats: { text: 'Honeymoon Deluxe', class: 'badge--rose' },
+    andaman_aura: { text: 'Premium', class: 'badge--gold' },
+    seasoul_sojourn: { text: 'Grand Tour', class: 'badge--gold' },
+    ethereal_isles: { text: 'Ultimate Luxury', class: 'badge--gold' }
+  };
+
+  Object.entries(packageData).forEach(([key, pkg], index) => {
+    const card = document.createElement('div');
+    card.className = 'pkg-card';
+    card.setAttribute('data-animate', '');
+    card.setAttribute('data-delay', (index % 3) * 100);
+
+    const badgeInfo = badges[key] || { text: 'Andaman', class: 'badge--teal' };
+
+    card.innerHTML = `
+      <div class="pkg-img" style="background-image:url('${pkg.image}')">
+        <span class="pkg-badge ${badgeInfo.class}">${badgeInfo.text}</span>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-meta">
+          <span class="pkg-duration">⏱ ${pkg.duration.split(' · ')[0]}</span>
+          <span class="pkg-dest">📍 Andaman</span>
+        </div>
+        <h3 class="pkg-title">${pkg.title}</h3>
+        <ul class="pkg-highlights">
+          ${pkg.highlights.slice(0, 4).map(h => `<li>${h}</li>`).join('')}
+        </ul>
+        <div class="pkg-footer">
+          <div class="pkg-price">
+            <span class="price-from" data-i18n="price_from">Starting from</span>
+            <span class="price-value" data-price-inr="${pkg.price}">${formatCurrency(pkg.price)}<small>/${pkg.unit === 'per couple' ? 'couple' : 'person'}</small></span>
+          </div>
+          <button class="btn btn-pkg" data-i18n="btn_view_details" onclick="openPackageModal('${key}')">View Details</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function initDynamicGallery() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const categories = ['beaches', 'activities', 'resorts'];
+  const captions = {
+    beaches: [
+      'Radhanagar Beach Serenity', 'Pristine Neil Shoreline', 'Havelock Turquoise Waters', 
+      'Chidiyatapu Coastal Sunset', 'Corbyn\'s Cove Afternoon', 'Ross & Smith Sandbar',
+      'Quiet Cove View', 'Golden Hour Shore', 'Kalapathar Beach Palms'
+    ],
+    activities: [
+      'Scuba Diving Adventure', 'Coral Reef Snorkeling', 'Jet Ski Excursion', 
+      'Sea Walking Experience', 'Mangrove Kayaking Journey', 'Trek to Munda Pahar',
+      'Baratang Cave Trek', 'Speedboat Excursion', 'Glass-Bottom Boat Sightseeing'
+    ],
+    resorts: [
+      'Beachside Luxury Resort', 'Premium Island Cottage', 'Ocean View Suite', 
+      'Infinity Pool at Dusk', 'Tropical Resort Pathway', 'Eco-friendly Cottage Stay',
+      'Resort Garden View', 'Cozy Beach Hut Stay', 'Charming Island Villa'
+    ]
+  };
+
+  GALLERY_IMAGES.forEach((filename, i) => {
+    const cat = categories[i % categories.length];
+    const captionList = captions[cat];
+    const caption = captionList[i % captionList.length];
+    
+    let sizeClass = '';
+    if (i % 5 === 0) sizeClass = 'gal-item--tall';
+    else if (i % 7 === 0) sizeClass = 'gal-item--wide';
+
+    const div = document.createElement('div');
+    div.className = `gal-item ${sizeClass}`;
+    div.setAttribute('data-cat', cat);
+    div.innerHTML = `
+      <div class="gal-img-wrap">
+        <div class="gal-img" style="background-image:url('images/GALLERY/${filename}')" data-full="images/GALLERY/${filename}"></div>
+        <div class="gal-overlay">
+          <span class="gal-expand">⊕</span>
+          <span class="gal-caption">${caption}</span>
+        </div>
+      </div>
+    `;
+    div.addEventListener('click', () => {
+      buildLb();
+      const visible = [...document.querySelectorAll('.gal-item:not(.hidden)')];
+      lbIdx = visible.indexOf(div);
+      openLb(lbIdx);
+    });
+    grid.appendChild(div);
+  });
+}
+
+window.scrollPackages = function(direction) {
+  const grid = document.querySelector('.packages-grid');
+  if (!grid) return;
+  const cards = grid.querySelectorAll('.pkg-card');
+  if (cards.length === 0) return;
+
+  const scrollLeft = grid.scrollLeft;
+  const gridCenter = scrollLeft + grid.offsetWidth / 2;
+  
+  let closestIndex = 0;
+  if (scrollLeft <= 15) {
+    closestIndex = 0;
+  } else if (scrollLeft >= grid.scrollWidth - grid.offsetWidth - 15) {
+    closestIndex = cards.length - 1;
+  } else {
+    let closestDist = Infinity;
+    cards.forEach((card, idx) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const dist = Math.abs(gridCenter - cardCenter);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestIndex = idx;
+      }
+    });
+  }
+
+  let targetIndex = closestIndex + direction;
+  targetIndex = Math.max(0, Math.min(cards.length - 1, targetIndex));
+  
+  const targetCard = cards[targetIndex];
+  grid.scrollTo({
+    left: targetCard.offsetLeft - (grid.offsetWidth - targetCard.offsetWidth) / 2,
+    behavior: 'smooth'
+  });
+};
+
+window.initPackagesSlider = function() {
+  const grid = document.querySelector('.packages-grid');
+  const dotsContainer = document.getElementById('sliderDots');
+  if (!grid || !dotsContainer) return;
+
+  const cards = Array.from(grid.querySelectorAll('.pkg-card')).filter(card => card.style.display !== 'none');
+  dotsContainer.innerHTML = '';
+  
+  cards.forEach((card, idx) => {
+    const dot = document.createElement('div');
+    dot.className = 'slider-dot' + (idx === 0 ? ' active' : '');
+    dot.addEventListener('click', () => {
+      grid.scrollTo({
+        left: card.offsetLeft - (grid.offsetWidth - card.offsetWidth) / 2,
+        behavior: 'smooth'
+      });
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  function updateActive() {
+    const scrollLeft = grid.scrollLeft;
+    const gridCenter = scrollLeft + grid.offsetWidth / 2;
+    
+    let closestIndex = 0;
+    if (scrollLeft <= 15) {
+      closestIndex = 0;
+    } else if (scrollLeft >= grid.scrollWidth - grid.offsetWidth - 15) {
+      closestIndex = cards.length - 1;
+    } else {
+      let closestDist = Infinity;
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const dist = Math.abs(gridCenter - cardCenter);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIndex = idx;
+        }
+      });
+    }
+
+    cards.forEach((card, idx) => {
+      card.classList.toggle('active-card', idx === closestIndex);
+    });
+
+    const dots = dotsContainer.querySelectorAll('.slider-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === closestIndex);
+    });
+  }
+
+  // Trigger immediately and after layout rendering completes
+  updateActive();
+  setTimeout(updateActive, 100);
+  setTimeout(updateActive, 500);
+
+  grid.addEventListener('scroll', updateActive, { passive: true });
+  window.addEventListener('resize', updateActive, { passive: true });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+  initDynamicGallery();
+  if (window.applyAdminConfigToUI) window.applyAdminConfigToUI();
+  if (window.initPackagesSlider) window.initPackagesSlider();
   initSectionImages();
   showStep(1);
   setNights(5);
   setBudget(75000);
   recalcPrice();
   updateAIStatusLabel();
-  if (nightsSlider) nightsSlider.style.backgroundSize = '28.5% 100%'; // 5/14 ≈ 28.5%
+  if (nightsSlider) nightsSlider.style.backgroundSize = '28.5% 100%';
 
-  // Fetch live exchange rates in background (non-blocking)
   fetchExchangeRates();
 
-  // ── Lazy-load gallery background images ──────────────────────────
-  // Gallery images use inline style="background-image:url(...)"
-  // Convert them to data-bg for lazy loading ONLY if IntersectionObserver is available
   if ('IntersectionObserver' in window) {
     const galImgs = document.querySelectorAll('.gal-img[style*="background-image"]');
     galImgs.forEach(el => {
@@ -1859,7 +2364,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const match = styleAttr.match(/background-image:\s*url\(['"]?(.*?)['"]?\)/);
       if (match) {
         el.setAttribute('data-bg', match[1]);
-        el.style.backgroundImage = 'none'; // hide until in view
+        el.style.backgroundImage = 'none';
       }
     });
 
@@ -1875,9 +2380,280 @@ document.addEventListener('DOMContentLoaded', () => {
           obs.unobserve(el);
         }
       });
-    }, { rootMargin: '200px 0px' }); // preload 200px before entering view
+    }, { rootMargin: '200px 0px' });
 
     document.querySelectorAll('.gal-img[data-bg]').forEach(el => lazyObserver.observe(el));
   }
 });
 
+
+/* ================================================================
+   ADMIN PORTAL UI CONTROLS & DYNAMIC RENDERING
+   ================================================================ */
+window.applyAdminConfigToUI = function() {
+  const grid = document.querySelector('.packages-grid');
+  if (!grid) return;
+
+  const cards = grid.querySelectorAll('.pkg-card');
+  cards.forEach(card => {
+    const pkgId = card.getAttribute('data-pkg-id');
+    if (!pkgId) return;
+
+    // Visibility control
+    const isHidden = adminConfig.packageDisabled[pkgId] === true;
+    card.style.display = isHidden ? 'none' : '';
+
+    // Pricing text control
+    let priceRow = card.querySelector('.pkg-price-row');
+    if (adminConfig.cashModeEnabled) {
+      if (!priceRow) {
+        priceRow = document.createElement('div');
+        priceRow.className = 'pkg-price-row';
+        priceRow.style.cssText = 'margin-bottom: 12px; display: flex; align-items: baseline; gap: 4px; justify-content: center;';
+        const bodyEl = card.querySelector('.pkg-body');
+        const footerEl = card.querySelector('.pkg-footer');
+        if (bodyEl && footerEl) {
+          bodyEl.insertBefore(priceRow, footerEl);
+        }
+      }
+      const priceVal = adminConfig.packagePrices[pkgId] || (packageData[pkgId] ? packageData[pkgId].price : 0);
+      const unit = packageData[pkgId] ? packageData[pkgId].unit : 'per person';
+      priceRow.innerHTML = `
+        <span class="pkg-price-amount" style="font-size: 1.4rem; font-weight: 700; color: var(--yellow);">${formatCurrency(priceVal)}</span>
+        <span class="pkg-price-unit" style="font-size: 0.8rem; color: var(--text-3);">/ ${unit}</span>
+      `;
+      priceRow.style.display = 'flex';
+    } else {
+      if (priceRow) priceRow.style.display = 'none';
+    }
+  });
+
+  // Rebuild/refresh slider dots and layout center focus calculations
+  if (window.initPackagesSlider) {
+    window.initPackagesSlider();
+  }
+};
+
+/* Modals openers and closers */
+window.openAdminLoginModal = function() {
+  // If already logged in this session, skip login form and open dashboard directly
+  if (sessionStorage.getItem('sr_admin_auth') === 'true') {
+    window.openAdminDashboardModal();
+    return;
+  }
+  document.getElementById('adminEmail').value = '';
+  document.getElementById('adminPassword').value = '';
+  document.getElementById('adminLoginError').style.display = 'none';
+  document.getElementById('adminLoginModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeAdminLoginModal = function(e) {
+  if (e && e.target !== document.getElementById('adminLoginModal') && e.target !== document.querySelector('#adminLoginModal .modal-close')) return;
+  document.getElementById('adminLoginModal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+window.handleAdminLogin = function() {
+  const email = document.getElementById('adminEmail').value.trim();
+  const password = document.getElementById('adminPassword').value;
+  const errorEl = document.getElementById('adminLoginError');
+
+  // Credentials Check: Password must be 7Rays@1234
+  if (password === '7Rays@1234' && email.toLowerCase() === 'sevenraystravelagency@gmail.com') {
+    sessionStorage.setItem('sr_admin_auth', 'true');
+    document.getElementById('adminLoginModal').classList.remove('open');
+    errorEl.style.display = 'none';
+    window.openAdminDashboardModal();
+  } else {
+    errorEl.style.display = 'block';
+  }
+};
+
+window.openAdminDashboardModal = function() {
+  if (sessionStorage.getItem('sr_admin_auth') !== 'true') {
+    window.openAdminLoginModal();
+    return;
+  }
+
+  // Load and bind global toggles
+  const cashCheckbox = document.getElementById('adminCashModeCheckbox');
+  const tabPackages = document.getElementById('tabBtn-packages');
+  const tabBuilder = document.getElementById('tabBtn-builder');
+
+  function updateTabsVisibility() {
+    const isEnabled = cashCheckbox.checked;
+    if (tabPackages && tabBuilder) {
+      tabPackages.style.display = isEnabled ? 'block' : 'none';
+      tabBuilder.style.display = isEnabled ? 'block' : 'none';
+      if (!isEnabled) {
+        const currentActiveTab = document.querySelector('.admin-tab.active');
+        if (currentActiveTab && (currentActiveTab.id === 'tabBtn-packages' || currentActiveTab.id === 'tabBtn-builder')) {
+          window.switchAdminTab('global');
+        }
+      }
+    }
+  }
+
+  cashCheckbox.checked = adminConfig.cashModeEnabled;
+  updateTabsVisibility();
+  cashCheckbox.onchange = updateTabsVisibility;
+
+  document.getElementById('rate-base').value = adminConfig.baseRate;
+
+  // Render Accommodations list
+  const accomContainer = document.getElementById('adminAccomRatesContainer');
+  accomContainer.innerHTML = '';
+  const accomKeys = { homestay: 'Homestay / Hostel', budget: 'Budget Hotel', premium: 'Premium Hotel', luxury: 'Luxury Resort', villa: 'Private Villa' };
+  Object.keys(accomKeys).forEach(key => {
+    const rate = adminConfig.accomRates[key] || 0;
+    accomContainer.innerHTML += `
+      <div>
+        <label style="display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; color: var(--text-2);">${accomKeys[key]}</label>
+        <input type="number" id="rate-accom-${key}" class="ep-input" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); padding: 10px; background: var(--bg-2); color: var(--text-1);" value="${rate}" />
+      </div>
+    `;
+  });
+
+  // Render Activities list
+  const actContainer = document.getElementById('adminActRatesContainer');
+  actContainer.innerHTML = '';
+  const actKeys = {
+    scuba: 'Scuba Diving', snorkel: 'Snorkeling', island: 'Island Hopping',
+    dinner: 'Candlelight Dinner', watersports: 'Water Sports', seawalk: 'Sea Walk',
+    kayak: 'Kayaking', glassbottom: 'Glass Bottom', trek: 'Rainforest Trek'
+  };
+  Object.keys(actKeys).forEach(key => {
+    const rate = adminConfig.actRates[key] || 0;
+    actContainer.innerHTML += `
+      <div>
+        <label style="display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; color: var(--text-2);">${actKeys[key]}</label>
+        <input type="number" id="rate-act-${key}" class="ep-input" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); padding: 10px; background: var(--bg-2); color: var(--text-1);" value="${rate}" />
+      </div>
+    `;
+  });
+
+  // Render Transport list
+  const transContainer = document.getElementById('adminTransRatesContainer');
+  transContainer.innerHTML = '';
+  const transKeys = { flight: 'Flights (Round-trip)', ferry: 'Scenic Ferry Transfer', cab: 'Private Dedicated Cab' };
+  Object.keys(transKeys).forEach(key => {
+    const rate = adminConfig.transRates[key] || 0;
+    transContainer.innerHTML += `
+      <div>
+        <label style="display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 6px; color: var(--text-2);">${transKeys[key]}</label>
+        <input type="number" id="rate-trans-${key}" class="ep-input" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); padding: 10px; background: var(--bg-2); color: var(--text-1);" value="${rate}" />
+      </div>
+    `;
+  });
+
+  // Populate Package Lists
+  const listContainer = document.getElementById('adminPackagesListContainer');
+  listContainer.innerHTML = '';
+  Object.keys(packageData).forEach(key => {
+    const title = packageData[key].title;
+    const price = adminConfig.packagePrices[key] || packageData[key].price;
+    const isDisabled = adminConfig.packageDisabled[key] === true;
+
+    listContainer.innerHTML += `
+      <div class="admin-pkg-row">
+        <div class="admin-pkg-info">
+          <strong style="font-size: 0.9rem; display: block; color: var(--text-1);">${title}</strong>
+          <span style="font-size: 0.78rem; color: var(--text-3);">${packageData[key].duration}</span>
+        </div>
+        <div class="admin-pkg-controls">
+          <div class="admin-input-group">
+            <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-2);">Price (₹):</span>
+            <input type="number" id="pkg-price-${key}" class="ep-input" style="width: 100px; border-radius: 8px; border: 1px solid var(--border-color); padding: 6px; background: var(--bg-2); color: var(--text-1);" value="${price}" />
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-2);">Visible:</span>
+            <label class="switch-container" style="position: relative; display: inline-block; width: 44px; height: 24px;">
+              <input type="checkbox" id="pkg-vis-${key}" style="opacity: 0; width: 0; height: 0;" ${!isDisabled ? 'checked' : ''} />
+              <span class="switch-slider" style="position: absolute; cursor: pointer; inset: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  // Render tab defaults
+  window.switchAdminTab('global');
+
+  document.getElementById('adminDashboardModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeAdminDashboardModal = function(e) {
+  if (e && e.target !== document.getElementById('adminDashboardModal') && e.target !== document.querySelector('#adminDashboardModal .modal-close')) return;
+  document.getElementById('adminDashboardModal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+window.handleAdminLogout = function() {
+  sessionStorage.removeItem('sr_admin_auth');
+  document.getElementById('adminDashboardModal').classList.remove('open');
+  window.openAdminLoginModal();
+};
+
+window.switchAdminTab = function(tabName) {
+  // Remove active state
+  document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(content => content.style.display = 'none');
+
+  // Add active state
+  document.getElementById(`tabBtn-${tabName}`).classList.add('active');
+  document.getElementById(`tabContent-${tabName}`).style.display = 'block';
+};
+
+window.saveAdminSettings = function() {
+  // 1. Read Global Toggles
+  adminConfig.cashModeEnabled = document.getElementById('adminCashModeCheckbox').checked;
+  adminConfig.baseRate = parseInt(document.getElementById('rate-base').value) || 0;
+
+  // 2. Read Accom Rates
+  const accomKeys = ['homestay', 'budget', 'premium', 'luxury', 'villa'];
+  accomKeys.forEach(key => {
+    const inputVal = parseInt(document.getElementById(`rate-accom-${key}`).value);
+    adminConfig.accomRates[key] = isNaN(inputVal) ? 0 : inputVal;
+  });
+
+  // 3. Read Act Rates
+  const actKeys = ['scuba', 'snorkel', 'island', 'dinner', 'watersports', 'seawalk', 'kayak', 'glassbottom', 'trek'];
+  actKeys.forEach(key => {
+    const inputVal = parseInt(document.getElementById(`rate-act-${key}`).value);
+    adminConfig.actRates[key] = isNaN(inputVal) ? 0 : inputVal;
+  });
+
+  // 4. Read Trans Rates
+  const transKeys = ['flight', 'ferry', 'cab'];
+  transKeys.forEach(key => {
+    const inputVal = parseInt(document.getElementById(`rate-trans-${key}`).value);
+    adminConfig.transRates[key] = isNaN(inputVal) ? 0 : inputVal;
+  });
+
+  // 5. Read Packages Pricing and Visibility
+  Object.keys(packageData).forEach(key => {
+    const priceVal = parseInt(document.getElementById(`pkg-price-${key}`).value);
+    adminConfig.packagePrices[key] = isNaN(priceVal) ? 0 : priceVal;
+
+    const isVisible = document.getElementById(`pkg-vis-${key}`).checked;
+    adminConfig.packageDisabled[key] = !isVisible;
+  });
+
+  // 6. Save Config and Redraw
+  saveAdminConfigToStorage();
+  window.applyAdminConfigToUI();
+  recalcPrice();
+
+  document.getElementById('adminDashboardModal').classList.remove('open');
+  document.body.style.overflow = '';
+
+  // Show Success Toast
+  if (window.showToast) {
+    window.showToast("Settings saved successfully! 💾", "success");
+  } else {
+    alert("Settings saved successfully!");
+  }
+};
