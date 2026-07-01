@@ -246,6 +246,11 @@ p { color: var(--text-2); }
   width: 100%;
 }
 
+.banner-text-scroller {
+  display: flex;
+  align-items: center;
+}
+
 .top-banner-badge {
   background: var(--yellow);
   color: #111;
@@ -1775,8 +1780,13 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
 }
 
 /* ================================================================
-   RESPONSIVE TOP BANNER
+   RESPONSIVE TOP BANNER (MARQUEE SCROLLER ON MOBILE)
    ================================================================ */
+@keyframes marquee-scroll {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
 @media (max-width: 768px) {
   .top-banner {
     font-size: 0.72rem;
@@ -1784,22 +1794,38 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
     padding: 0 12px !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
   }
   .top-banner-badge {
     display: none !important; /* Hide badge on mobile */
   }
-  .banner-text {
-    white-space: nowrap !important;
+  .banner-text-scroller {
+    flex: 1 !important;
     overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    max-width: 70% !important;
+    position: relative !important;
+    height: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin-right: 8px !important;
+  }
+  .banner-text {
+    position: absolute !important;
+    white-space: nowrap !important;
+    will-change: transform !important;
+    animation: marquee-scroll 16s linear infinite !important;
+    padding-left: 100% !important; /* Start scrolling from far right */
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
   }
   .top-banner-container {
     flex-direction: row !important;
     gap: 8px !important;
-    justify-content: center !important;
+    justify-content: space-between !important;
     align-items: center !important;
+  }
+  .top-banner a.banner-link {
+    flex-shrink: 0 !important;
+    font-weight: 700 !important;
   }
   #navbar {
     top: 34px !important;
@@ -1808,6 +1834,7 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
     top: 0 !important;
   }
 }
+
 
 /* ================================================================
    HERO PRICE BADGE
@@ -1950,14 +1977,20 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
     margin-inline: auto !important;
   }
   .hero-ctas {
-    justify-content: center !important;
+    display: flex !important;
+    flex-direction: row !important; /* side-by-side */
+    justify-content: center !important; /* centered on page */
+    gap: 10px !important;
     width: 100% !important;
-    gap: 12px !important;
+    margin-top: 20px !important;
   }
-  .hero-ctas a {
-    width: 100% !important;
-    max-width: 280px !important;
+  .hero-ctas a.btn {
+    flex: 1 !important;
+    max-width: 160px !important;
+    padding: 10px 14px !important; /* smaller, perfect size */
+    font-size: 0.8rem !important; /* smaller, readable font */
     text-align: center !important;
+    white-space: nowrap !important;
   }
 }
 
