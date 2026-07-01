@@ -1902,7 +1902,7 @@ function updateGalleryVisibility() {
 const showMoreBtn = document.getElementById('galleryShowMoreBtn');
 if (showMoreBtn) {
   showMoreBtn.addEventListener('click', () => {
-    currentGalleryLimit = 9999; // Show all matching items
+    currentGalleryLimit += 12; // Show 12 more items
     updateGalleryVisibility();
   });
 }
@@ -1932,7 +1932,7 @@ function buildLb() {
   document.querySelectorAll('.gal-item:not(.hidden) .gal-img').forEach(el => {
     lbImages.push({
       src: el.dataset.full || '',
-      caption: el.closest('.gal-item')?.querySelector('.gal-caption')?.textContent || '',
+      caption: el.dataset.caption || '',
     });
   });
 }
@@ -2289,19 +2289,18 @@ function initDynamicGallery() {
     const captionList = captions[cat];
     const caption = captionList[i % captionList.length];
     
-    let sizeClass = '';
-    if (i % 5 === 0) sizeClass = 'gal-item--tall';
-    else if (i % 7 === 0) sizeClass = 'gal-item--wide';
-
     const div = document.createElement('div');
-    div.className = `gal-item ${sizeClass}`;
+    div.className = 'gal-item';
     div.setAttribute('data-cat', cat);
+    
+    // URL-encode the filename to handle spaces and parentheses safely in CSS url()
+    const encodedFilename = encodeURIComponent(filename).replace(/\(/g, '%28').replace(/\)/g, '%29');
+    
     div.innerHTML = `
       <div class="gal-img-wrap">
-        <div class="gal-img" style="background-image:url('images/GALLERY/${filename}')" data-full="images/GALLERY/${filename}"></div>
+        <div class="gal-img" style="background-image:url('images/GALLERY/${encodedFilename}')" data-full="images/GALLERY/${encodedFilename}" data-caption="${caption.replace(/"/g, '&quot;')}"></div>
         <div class="gal-overlay">
           <span class="gal-expand">⊕</span>
-          <span class="gal-caption">${caption}</span>
         </div>
       </div>
     `;
