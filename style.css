@@ -1881,4 +1881,106 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
   font-weight: 500;
 }
 
+/* ================================================================
+   MOBILE RESPONSIVENESS & GALLERY IMPROVEMENTS
+   ================================================================ */
+
+/* Hide gallery items truncated by show-more limit */
+.gal-item.hidden-limit {
+  display: none !important;
+}
+
+/* Hide admin portal button in mobile view */
+@media (max-width: 768px) {
+  #adminPortalToggle {
+    display: none !important;
+  }
+}
+
+/* Optimize Mobile Header Layout */
+@media (max-width: 768px) {
+  .logo-sub {
+    display: none !important;
+  }
+  .logo-name {
+    font-size: 0.95rem !important;
+  }
+  .logo-img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .nav-container {
+    padding: 0 12px !important;
+  }
+  .nav-utilities {
+    gap: 6px !important;
+  }
+}
+
+/* Optimize Hero Statistics layout on mobile */
+@media (max-width: 768px) {
+  .hero-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin-top: 32px !important;
+  }
+  .stat-div {
+    display: none !important; /* Hide vertical dividers */
+  }
+  .stat {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .stat-num {
+    font-size: 1.4rem !important;
+  }
+  .stat-lbl {
+    font-size: 0.62rem !important;
+  }
+}
+
+/* Trip Builder mobile date stacking & layout */
+@media (max-width: 768px) {
+  .date-group {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+  .date-arrow-icon {
+    display: none !important; /* Hide the arrow when stacked */
+  }
+  .date-field-wrap {
+    width: 100% !important;
+  }
+  .traveler-block {
+    padding: 12px 14px !important;
+  }
+  .tb-info {
+    gap: 8px !important;
+  }
+  .tb-icon {
+    font-size: 1.3rem !important;
+  }
+}
+
+/* Show destination link on touch viewports */
+@media (max-width: 768px) {
+  .dest-link {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+
+/* Center AI Planner introduction bar on narrow screens */
+@media (max-width: 480px) {
+  .ai-entry-left {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 8px !important;
+  }
+}
+
+
 

@@ -4,6 +4,28 @@
    ================================================================ */
 'use strict';
 
+// Inject gallery_show_more translations if window.SR_TRANSLATIONS is available
+if (window.SR_TRANSLATIONS) {
+  const showMoreTranslations = {
+    en: 'Show More Images 📸',
+    hi: 'और तस्वीरें दिखाएं 📸',
+    bn: 'আরো ছবি দেখান 📸',
+    ta: 'மேலும் படங்களைக் காட்டு 📸',
+    te: 'మరిన్ని చిత్రాలను చూపించు 📸',
+    es: 'Mostrar más imágenes 📸',
+    fr: 'Afficher plus d\'images 📸',
+    de: 'Mehr Bilder anzeigen 📸',
+    ar: 'عرض المزيد من الصور 📸',
+    zh: '显示更多图片 📸'
+  };
+  Object.keys(showMoreTranslations).forEach(lang => {
+    if (window.SR_TRANSLATIONS[lang]) {
+      window.SR_TRANSLATIONS[lang].gallery_show_more = showMoreTranslations[lang];
+    }
+  });
+}
+
+
 /* ================================================================
    ADMIN PORTAL CONFIG & STATE
    ================================================================ */
@@ -1841,21 +1863,66 @@ const lbOverlay = document.getElementById('lightboxOverlay');
 const lbImg = document.getElementById('lbImg');
 const lbCap = document.getElementById('lbCaption');
 
+// Gallery Pagination & Limits
+let activeGalleryFilter = 'all';
+let currentGalleryLimit = window.innerWidth <= 768 ? 8 : 12;
+
+function updateGalleryVisibility() {
+  const items = document.querySelectorAll('.gal-item');
+  let matchingCount = 0;
+  items.forEach(item => {
+    const matchesCategory = activeGalleryFilter === 'all' || item.dataset.cat === activeGalleryFilter;
+    if (matchesCategory) {
+      item.classList.remove('hidden'); // clear filter-hidden
+      if (matchingCount < currentGalleryLimit) {
+        item.classList.remove('hidden-limit');
+        matchingCount++;
+      } else {
+        item.classList.add('hidden-limit');
+      }
+    } else {
+      item.classList.add('hidden');
+      item.classList.remove('hidden-limit');
+    }
+  });
+
+  // Update Show More button visibility
+  const showMoreBtn = document.getElementById('galleryShowMoreBtn');
+  if (showMoreBtn) {
+    const totalMatching = [...items].filter(item => activeGalleryFilter === 'all' || item.dataset.cat === activeGalleryFilter).length;
+    if (totalMatching > currentGalleryLimit) {
+      showMoreBtn.style.display = 'inline-flex';
+    } else {
+      showMoreBtn.style.display = 'none';
+    }
+  }
+}
+
+// Bind Show More button click
+const showMoreBtn = document.getElementById('galleryShowMoreBtn');
+if (showMoreBtn) {
+  showMoreBtn.addEventListener('click', () => {
+    currentGalleryLimit = 9999; // Show all matching items
+    updateGalleryVisibility();
+  });
+}
+
 document.querySelectorAll('.gal-filter').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.gal-filter').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const f = btn.dataset.filter;
-    document.querySelectorAll('.gal-item').forEach(item => {
-      const show = f === 'all' || item.dataset.cat === f;
-      item.classList.toggle('hidden', !show);
-      if (show) {
-        item.style.opacity = '0'; item.style.transform = 'scale(0.95)';
-        requestAnimationFrame(() => setTimeout(() => {
-          item.style.transition = 'all 0.4s ease';
-          item.style.opacity = '1'; item.style.transform = 'scale(1)';
-        }, 20));
-      }
+    activeGalleryFilter = btn.dataset.filter;
+    // Reset limit on category switch
+    currentGalleryLimit = window.innerWidth <= 768 ? 8 : 12;
+    updateGalleryVisibility();
+
+    // Fade-in animation for active elements
+    document.querySelectorAll('.gal-item:not(.hidden):not(.hidden-limit)').forEach(item => {
+      item.style.opacity = '0'; item.style.transform = 'scale(0.95)';
+      requestAnimationFrame(() => setTimeout(() => {
+        item.style.transition = 'all 0.4s ease';
+        item.style.opacity = '1'; item.style.transform = 'scale(1)';
+      }, 20));
     });
   });
 });
@@ -1869,6 +1936,7 @@ function buildLb() {
     });
   });
 }
+
 
 // Dynamic click handlers attached during gallery init
 
@@ -2245,6 +2313,9 @@ function initDynamicGallery() {
     });
     grid.appendChild(div);
   });
+  
+  // Apply gallery limits and initial pagination visibility
+  updateGalleryVisibility();
 }
 
 window.scrollPackages = function(direction) {
