@@ -1780,19 +1780,32 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
 @media (max-width: 768px) {
   .top-banner {
     font-size: 0.72rem;
-    height: auto;
-    padding: 8px 16px;
-    text-align: center;
+    height: 34px !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .top-banner-badge {
+    display: none !important; /* Hide badge on mobile */
+  }
+  .banner-text {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 70% !important;
   }
   .top-banner-container {
-    flex-direction: column;
-    gap: 4px;
+    flex-direction: row !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
   #navbar {
-    top: 52px;
+    top: 34px !important;
   }
   #navbar.scrolled {
-    top: 0;
+    top: 0 !important;
   }
 }
 
@@ -1917,6 +1930,37 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
   }
 }
 
+/* Center Landing Page Hero Section Elements on Mobile */
+@media (max-width: 768px) {
+  .hero-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .hero-eyebrow {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+  .hero-headline {
+    align-items: center !important;
+  }
+  .hero-sub {
+    text-align: center !important;
+    margin-inline: auto !important;
+  }
+  .hero-ctas {
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 12px !important;
+  }
+  .hero-ctas a {
+    width: 100% !important;
+    max-width: 280px !important;
+    text-align: center !important;
+  }
+}
+
 /* Optimize Hero Statistics layout on mobile */
 @media (max-width: 768px) {
   .hero-stats {
@@ -1938,6 +1982,23 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
   }
   .stat-lbl {
     font-size: 0.62rem !important;
+  }
+}
+
+/* Trip Builder Step Progress Bar & Card Spacing on Mobile */
+@media (max-width: 768px) {
+  .prog-step {
+    min-width: auto !important; /* Remove minimum width constraints */
+    flex: 1 !important;
+  }
+  .progress-steps-row {
+    overflow-x: visible !important; /* Turn off horizontal scrolling */
+    justify-content: space-around !important; /* Distribute steps evenly */
+    padding-bottom: 0 !important;
+  }
+  .dest-options {
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
   }
 }
 
@@ -1974,7 +2035,7 @@ body.translated-ltr, body.translated-rtl { top: 0 !important; margin-top: 0 !imp
 }
 
 /* Center AI Planner introduction bar on narrow screens */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .ai-entry-left {
     flex-direction: column !important;
     text-align: center !important;
