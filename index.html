@@ -800,22 +800,10 @@
         <span class="aip-icon">🤖</span>
         <div>
           <strong>AI Trip Planner</strong>
-          <small id="aiStatusLabel">Smart mode &mdash; <a href="#" class="ai-key-link" onclick="toggleAIKeySection(event)">Add OpenAI key for GPT-4</a></small>
+          <small id="aiStatusLabel">Smart Offline Planner Active</small>
         </div>
       </div>
       <button class="ai-panel-close" onclick="closeAIPlanner()">&times;</button>
-    </div>
-    <!-- API Key Section (collapsible) -->
-    <div class="ai-key-section" id="aiKeySection" style="display:none">
-      <div class="ai-key-inner">
-        <p class="ai-key-hint">🔑 Paste your OpenAI API key. Stored only in this browser &mdash; never sent to our servers.</p>
-        <div class="ai-key-row">
-          <input type="password" id="aiApiKeyInput" class="ai-key-input" placeholder="sk-..." autocomplete="off" />
-          <button class="btn btn-sm btn-primary" onclick="saveAPIKey()">Save</button>
-          <button class="btn btn-sm btn-outline-dark" onclick="clearAPIKey()">Clear</button>
-        </div>
-        <a href="https://platform.openai.com/api-keys" target="_blank" class="ai-key-hint-link">Get your OpenAI key &rarr;</a>
-      </div>
     </div>
     <div class="ai-panel-tabs">
       <button class="ai-tab active" data-tab="chat" onclick="switchAITab('chat')">💬 Chat</button>
@@ -1044,7 +1032,7 @@
 <div class="lightbox-overlay" id="lightboxOverlay">
   <button class="lb-close" onclick="closeLightbox()">&times;</button>
   <button class="lb-arrow lb-prev" id="lbPrev">&#8249;</button>
-  <div class="lb-content"><img class="lb-img" id="lbImg" src="" alt="" /><span class="lb-caption" id="lbCaption"></span></div>
+  <div class="lb-content"><img class="lb-img" id="lbImg" src="" alt="" /></div>
   <button class="lb-arrow lb-next" id="lbNext">&#8250;</button>
 </div>
 

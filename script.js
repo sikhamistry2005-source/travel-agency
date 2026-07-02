@@ -1235,119 +1235,7 @@ window.getMyPlan = function() {
    AI MODULE V3 — OpenAI + Smart Fallback
    ================================================================ */
 
-/* — API Key Management — */
-function getOpenAIKey() {
-  try { return localStorage.getItem('sr-openai-key') || ''; } catch(e) { return ''; }
-}
-
-function saveOpenAIKey_internal(key) {
-  try { localStorage.setItem('sr-openai-key', key.trim()); } catch(e) {}
-}
-
-function updateAIStatusLabel() {
-  const label = document.getElementById('aiStatusLabel');
-  if (!label) return;
-  const key = getOpenAIKey();
-  if (key && key.startsWith('sk-')) {
-    label.textContent = '✅ GPT-4 connected — real AI active';
-    label.classList.add('has-key');
-  } else {
-    label.innerHTML = 'Smart mode — <a href="#" class="ai-key-link" onclick="toggleAIKeySection(event)">Add OpenAI key for GPT-4</a>';
-    label.classList.remove('has-key');
-  }
-}
-
-window.toggleAIKeySection = function(e) {
-  if (e) e.preventDefault();
-  const section = document.getElementById('aiKeySection');
-  if (!section) return;
-  const isHidden = section.style.display === 'none' || !section.style.display;
-  section.style.display = isHidden ? 'block' : 'none';
-  if (isHidden) {
-    const input = document.getElementById('aiApiKeyInput');
-    const existing = getOpenAIKey();
-    if (input) { input.value = existing || ''; input.focus(); }
-  }
-};
-
-window.saveAPIKey = function() {
-  const input = document.getElementById('aiApiKeyInput');
-  if (!input) return;
-  const key = input.value.trim();
-  if (!key) { showToast('Please enter your API key', 'warning'); return; }
-  if (!key.startsWith('sk-')) { showToast('Key should start with sk-... Please check and try again', 'warning'); return; }
-  saveOpenAIKey_internal(key);
-  document.getElementById('aiKeySection').style.display = 'none';
-  updateAIStatusLabel();
-  showToast('✅ OpenAI key saved! Real AI is now active.', 'success');
-};
-
-window.clearAPIKey = function() {
-  try { localStorage.removeItem('sr-openai-key'); } catch(e) {}
-  const input = document.getElementById('aiApiKeyInput');
-  if (input) input.value = '';
-  document.getElementById('aiKeySection').style.display = 'none';
-  updateAIStatusLabel();
-  showToast('API key cleared. Using Smart mode.', 'info');
-};
-
-/* — OpenAI API Call — */
-async function callOpenAI(messages) {
-  const key = getOpenAIKey();
-  if (!key) throw new Error('NO_KEY');
-
-  const resp = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${key}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-3.5-turbo',
-      messages,
-      max_tokens: 1800,
-      temperature: 0.75,
-    }),
-    signal: AbortSignal.timeout(30000),
-  });
-
-  if (!resp.ok) {
-    const errBody = await resp.json().catch(() => ({}));
-    const msg = errBody.error?.message || `HTTP ${resp.status}`;
-    throw new Error(msg);
-  }
-
-  const data = await resp.json();
-  return data.choices[0].message.content;
-}
-
-/* — System Prompt — */
-const AI_SYSTEM_PROMPT = `You are an expert luxury travel planner for Seven Rays Travel Agency, specializing in the Andaman Islands.
-
-When the user asks for a trip plan, respond with exactly TWO sections:
-
-1. A JSON block wrapped in <PLAN_JSON>...</PLAN_JSON> with this exact schema:
-{
-  "destination": "andaman",
-  "nights": <number 3-14>,
-  "accommodation": "budget" or "premium" or "luxury" or "villa" or "homestay",
-  "activities": [list from: "scuba","snorkel","island","dinner","watersports","seawalk","kayak","glassbottom","trek"],
-  "addons": [list from: "photo","decor","guide","honeymoon","birthday","proposal","beachdinner","yacht","spa","drone","underwater","bonfire","yoga","concierge"]
-}
-Only include activities and addons relevant to the trip type.
-
-For ANDAMAN trips:
-- Activities: scuba, snorkel, island, seawalk, kayak, glassbottom, trek
-- Key islands: Havelock, Neil, North Bay, Ross Island
-- Add-ons: underwater, drone, biolum, guide, honeymoon, photo
-- Highlights: Radhanagar Beach, Cellular Jail, coral reefs, bioluminescent beach
-
-2. After the JSON block, a warm, day-by-day itinerary in plain text (no JSON, no markdown headers).
-
-Always focus on the Andaman Islands. If the user mentions Goa, politely inform them that Seven Rays currently specializes exclusively in premium Andaman experiences.
-Be warm, specific, and knowledgeable. Include local tips and hidden gems.
-Suggest upgrades when appropriate: "Would you prefer a luxury stay for a more premium experience?"`;
-
+/* — Offline AI Planner Utilities — */
 /* — Parse AI Plan JSON — */
 function parseAIPlan(text) {
   try {
@@ -1373,7 +1261,6 @@ window.openAIPlanner = function() {
   aiOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
   updateAIStatePreview();
-  updateAIStatusLabel();
 };
 
 window.closeAIPlanner = function(e) {
@@ -1407,8 +1294,6 @@ function appendMsg(text, role, typing = false) {
   return bubble;
 }
 
-let chatHistory = []; // OpenAI message history for context
-
 window.sendAIMessage = async function() {
   const text = aiInput.value.trim();
   if (!text) return;
@@ -1417,27 +1302,9 @@ window.sendAIMessage = async function() {
   const typingBubble = appendMsg('', 'bot', true);
 
   try {
-    let responseText;
-    const hasKey = getOpenAIKey() && getOpenAIKey().startsWith('sk-');
-
-    if (hasKey) {
-      chatHistory.push({ role: 'user', content: text });
-      // Inject language instruction so AI replies in the user's selected language
-      const LANG_NAMES = { en:'English', hi:'Hindi', bn:'Bengali', ta:'Tamil', te:'Telugu', es:'Spanish', fr:'French', de:'German', ar:'Arabic', zh:'Chinese' };
-      const langInstruction = (currentLang && currentLang !== 'en')
-        ? `\n\nIMPORTANT: The user has selected ${LANG_NAMES[currentLang] || 'English'} as their language. You MUST respond ENTIRELY in ${LANG_NAMES[currentLang] || 'English'}. The PLAN_JSON block must still use English keys, but all descriptive text, itinerary, and messages must be in ${LANG_NAMES[currentLang] || 'English'}.`
-        : '';
-      const messages = [
-        { role: 'system', content: AI_SYSTEM_PROMPT + langInstruction },
-        ...chatHistory.slice(-8), // Keep last 8 messages for context
-      ];
-      responseText = await callOpenAI(messages);
-      chatHistory.push({ role: 'assistant', content: responseText });
-    } else {
-      // Use smart fallback
-      await new Promise(r => setTimeout(r, 1800)); // Simulate thinking
-      responseText = generateSmartFallback(text);
-    }
+    // Simulate smart thinking delay
+    await new Promise(r => setTimeout(r, 1200));
+    const responseText = generateSmartFallback(text);
 
     // Remove typing indicator
     typingBubble.classList.remove('typing');
@@ -1460,16 +1327,8 @@ window.sendAIMessage = async function() {
 
   } catch(err) {
     typingBubble.classList.remove('typing');
-    if (err.message === 'NO_KEY') {
-      typingBubble.textContent = 'Smart mode active. ' + generateSmartFallback(text);
-    } else if (err.message.includes('401') || err.message.includes('Incorrect API key')) {
-      typingBubble.textContent = '❌ Invalid API key. Please check your key in settings above.';
-      showToast('Invalid OpenAI API key. Please verify and re-enter.', 'error');
-    } else {
-      typingBubble.textContent = '❌ Unable to generate plan right now. Please try again.';
-      showToast('AI request failed. Check your connection and try again.', 'error');
-      console.error('OpenAI error:', err);
-    }
+    typingBubble.textContent = '❌ Unable to generate plan right now. Please try again.';
+    showToast('AI request failed. Please try again.', 'error');
   }
 
   aiMessages.scrollTop = aiMessages.scrollHeight;
@@ -1508,28 +1367,8 @@ window.generateAutoPlan = async function() {
   btn.disabled = true;
 
   try {
-    let planHTML;
-    const hasKey = getOpenAIKey() && getOpenAIKey().startsWith('sk-');
-
-    if (hasKey) {
-      const prompt = buildAutoPrompt();
-      // Inject language instruction for Auto Plan too
-      const LANG_NAMES = { en:'English', hi:'Hindi', bn:'Bengali', ta:'Tamil', te:'Telugu', es:'Spanish', fr:'French', de:'German', ar:'Arabic', zh:'Chinese' };
-      const langInstruction = (currentLang && currentLang !== 'en')
-        ? `\n\nIMPORTANT: Respond ENTIRELY in ${LANG_NAMES[currentLang] || 'English'}. PLAN_JSON keys remain in English, but ALL other text must be in ${LANG_NAMES[currentLang] || 'English'}.`
-        : '';
-      const messages = [
-        { role: 'system', content: AI_SYSTEM_PROMPT + langInstruction },
-        { role: 'user', content: prompt },
-      ];
-      const responseText = await callOpenAI(messages);
-      const plan = parseAIPlan(responseText);
-      const itinerary = extractItinerary(responseText);
-      planHTML = renderAutoPlanHTML(itinerary, plan);
-    } else {
-      await new Promise(r => setTimeout(r, 2000));
-      planHTML = renderBuiltinAutoPlan();
-    }
+    await new Promise(r => setTimeout(r, 1200));
+    const planHTML = renderBuiltinAutoPlan();
 
     resultEl.innerHTML = planHTML;
     resultEl.style.display = 'block';
@@ -1538,11 +1377,11 @@ window.generateAutoPlan = async function() {
   } catch(err) {
     resultEl.innerHTML = `<div style="padding:20px;text-align:center">
       <div style="font-size:2rem;margin-bottom:12px">❌</div>
-      <p style="color:var(--text-2);margin-bottom:16px">Unable to generate plan. ${err.message.includes('401') ? 'Invalid API key.' : 'Please check your connection.'}</p>
+      <p style="color:var(--text-2);margin-bottom:16px">Unable to generate plan. Please check your inputs.</p>
       <button class="btn btn-primary btn-sm" onclick="generateAutoPlan()">Try Again</button>
     </div>`;
     resultEl.style.display = 'block';
-    showToast(err.message.includes('401') ? 'Invalid API key' : 'Plan generation failed. Try again.', 'error');
+    showToast('Plan generation failed. Try again.', 'error');
   }
 
   btn.classList.remove('btn-loading');
@@ -1663,114 +1502,122 @@ window.applyAIPlanToBuilder = function(plan) {
    ================================================================ */
 function generateSmartFallback(input) {
   const lower = input.toLowerCase();
-  const isHoneymoon = /honeymoon|romantic|couple|anniversary/.test(lower);
-  const isFamily = /family|kids|children|child/.test(lower);
-  const isAdventure = /adventure|scuba|diving|trek|extreme/.test(lower);
-  const isLuxury = /luxury|villa|premium|high.end|exclusive/.test(lower);
+  
+  // Destination matching
   const isGoa = /goa/.test(lower);
-  const isAndaman = /andaman/.test(lower);
-  const dest = 'Andaman';
-
   if (isGoa) {
     return `🌴 Seven Rays currently focuses exclusively on crafting premium, luxury travel experiences in the Andaman Islands.\n\nWe would be delighted to plan an unforgettable Andaman escape for you! Let me know if you would like a romantic, family, or adventure-focused Andaman itinerary.`;
   }
 
+  // Parse days
+  let days = 5; // default
+  const wordNumbers = {
+    one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+    eleven: 11, twelve: 12, thirteen: 13, fourteen: 14
+  };
+  const matches = lower.match(/\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|\d+)\s*day/);
+  if (matches) {
+    const val = matches[1];
+    days = parseInt(val) || wordNumbers[val] || 5;
+  } else {
+    // Fallback search for a simple number
+    const numMatch = lower.match(/\b(\d+)\b/);
+    if (numMatch) {
+      const val = parseInt(numMatch[1]);
+      if (val >= 1 && val <= 14) days = val;
+    }
+  }
+  days = Math.max(1, Math.min(14, days));
+  const nights = Math.max(1, days - 1);
+
+  // Type of trip
+  const isHoneymoon = /honeymoon|romantic|couple|anniversary/.test(lower);
+  const isFamily = /family|kids|children|child/.test(lower);
+  const isAdventure = /adventure|scuba|diving|trek|extreme/.test(lower);
+  const isLuxury = /luxury|villa|premium|high.end|exclusive/.test(lower);
+
+  let accom = 'premium';
+  let acts = ['island', 'snorkel'];
+  let addons = ['guide'];
+  let title = '🌴 Classic Andaman Getaway';
+
   if (isHoneymoon) {
-    return `<PLAN_JSON>{"destination":"andaman","nights":5,"accommodation":"luxury","activities":["snorkel","dinner","island"],"addons":["honeymoon","beachdinner","spa","photo"]}</PLAN_JSON>
-
-💕 Perfect romantic escape to ${dest}!
-
-Day 1: Arrival in Port Blair. Check into your luxury resort. Sunset stroll at Corbyn's Cove. Honeymoon surprise setup in your room.
-
-Day 2: Ferry to Havelock Island. Afternoon at Radhanagar Beach — Asia's most beautiful beach. Candlelight dinner by the shore with private setup.
-
-Day 3: Elephant Beach snorkeling with crystal-clear water. Couples spa treatment. Evening free for romance.
-
-Day 4: Neil Island day trip. Sunrise at Laxmanpur Beach. Picnic lunch arranged by our team.
-
-Day 5: Return to Port Blair. Professional photoshoot session on the beach. Departure.
-
-Est. Budget: ₹60,000–₹1,20,000/couple
-
-💡 Tip: Carry light, breathable clothing. Book the candlelight dinner in advance — spots fill up!`;
+    accom = 'luxury';
+    acts = ['snorkel', 'dinner', 'island'];
+    addons = ['honeymoon', 'beachdinner', 'spa', 'photo'];
+    title = '💕 Romantic Andaman Honeymoon';
+  } else if (isFamily) {
+    accom = 'premium';
+    acts = ['glassbottom', 'snorkel', 'island', 'watersports'];
+    addons = ['guide'];
+    title = '👨‍👩‍👧‍👦 Premium Family Explorer';
+  } else if (isAdventure) {
+    accom = 'budget';
+    acts = ['scuba', 'snorkel', 'seawalk', 'watersports', 'kayak', 'trek'];
+    addons = ['underwater', 'biolum', 'guide'];
+    title = '⚡ Active Andaman Adventure';
+  } else if (isLuxury) {
+    accom = 'villa';
+    acts = ['scuba', 'snorkel', 'island', 'dinner'];
+    addons = ['yacht', 'drone', 'spa', 'photo', 'concierge', 'underwater'];
+    title = '👑 Ultimate Luxury Escape';
   }
 
-  if (isFamily) {
-    return `<PLAN_JSON>{"destination":"andaman","nights":6,"accommodation":"premium","activities":["glassbottom","snorkel","island","watersports"],"addons":["guide"]}</PLAN_JSON>
+  // Daily descriptions library
+  const dailyPlans = [
+    { t: 'Arrival & Discovery', c: 'Airport pickup → Port Blair hotel check-in. Explore Corbyn\'s Cove Beach for sunset. Evening: Attend the historic Cellular Jail Light & Sound Show.' },
+    { t: 'North Bay & Ross Island', c: 'Day excursion to North Bay Island (snorkeling and glass-bottom boat rides above vibrant reefs) and Ross Island (explore British-era ruins and meet free-roaming deer).' },
+    { t: 'Ferry to Havelock Island', c: 'Board the morning ferry to Havelock Island. Check-in at your beachfront resort. Spend a relaxing afternoon at Radhanagar Beach, famous for its powder-white sand and stunning sunset views.' },
+    { t: 'Elephant Beach Adventure', c: 'Take a speed boat ride to Elephant Beach. Indulge in exciting water activities like sea walking, snorkeling, or jet skiing. Enjoy the pristine turquoise waters.' },
+    { t: 'Kalapathar Beach Palms', c: 'Watch the sunrise at Kalapathar Beach with its unique black rocks and turquoise waters. Take a light jungle walk or relax under the palm trees.' },
+    { t: 'Neil Island Serenity', c: 'Ferry to Neil Island. Visit Bharatpur Beach for coral viewing and Laxmanpur Beach for a serene walk. Catch the spectacular sunset by the sea.' },
+    { t: 'Neil Island Rock Formations', c: 'Visit the famous natural rock formation (Howrah Bridge) during low tide. Experience the rustic and peaceful atmosphere of the island.' },
+    { t: 'Mount Harriet Forest Trek', c: 'Day trip to Mount Harriet National Park, the highest point in South Andaman. Enjoy scenic forest trails and beautiful bird watching spots.' },
+    { t: 'Baratang Island Caves', c: 'Early morning drive to Baratang Island. Pass through tribal reserve forests, take a speed boat through dense mangroves, and explore the ancient limestone caves.' },
+    { t: 'Chidiyatapu Sunset Point', c: 'Visit Chidiyatapu (Bird Island) for spectacular coastal views, walks through the biological park, and a legendary sunset over the ocean.' },
+    { t: 'Jolly Buoy Coral Reefs', c: 'Excursion to Jolly Buoy Island in the Mahatma Gandhi Marine National Park. Witness some of the best coral reefs and underwater marine life in India.' },
+    { t: 'Viper Island Historic Cruise', c: 'Harbour cruise around Port Blair, stopping to explore Viper Island ruins and the historical remnants of the colonial era.' },
+    { t: 'Coastal Kayaking', c: 'Enjoy a peaceful guided kayak journey through the serene mangrove creeks in the morning, followed by a relaxing spa session in Havelock.' },
+    { t: 'Departure transfer', c: 'Collect beautiful local shell crafts at Aberdeen Market. Head to the airport for your flight home with sweet memories of Andaman!' }
+  ];
 
-👨‍👩‍👧‍👦 Perfect Family Adventure in ${dest}!
-
-Day 1: Arrive Port Blair. Marine Museum. Cellular Jail Light & Sound Show — very educational for kids!
-
-Day 2: North Bay Island — glass-bottom boat ride (kids love it!), snorkeling. Ross Island with wild deer.
-
-Day 3: Ferry to Havelock. Radhanagar Beach — shallow and safe for children. Build sandcastles!
-
-Day 4: Elephant Beach water sports — banana boat, sea walk. Even beginners can do sea walk.
-
-Day 5: Neil Island — peaceful, uncrowded. Natural Bridge at low tide.
-
-Day 6: Return. Shopping for shells and pearls. Departure.
-
-Est. Budget: ₹55,000–₹85,000/family (2A+2C)
-
-💡 Tip: Book afternoon ferries to Havelock — kids are usually fresher then!`;
+  // Build custom itinerary for exact days count
+  const itineraryDays = [];
+  for (let i = 1; i <= days; i++) {
+    let dayData;
+    if (i === 1) {
+      dayData = dailyPlans[0];
+    } else if (i === days) {
+      dayData = dailyPlans[dailyPlans.length - 1];
+    } else {
+      // Pick intermediate days
+      const idx = (i - 1) % (dailyPlans.length - 2) + 1;
+      dayData = dailyPlans[idx];
+    }
+    itineraryDays.push({ d: i, t: dayData.t, c: dayData.c });
   }
 
-  if (isLuxury) {
-    return `<PLAN_JSON>{"destination":"andaman","nights":7,"accommodation":"villa","activities":["scuba","snorkel","island","dinner"],"addons":["yacht","drone","spa","photo","concierge","underwater"]}</PLAN_JSON>
+  // Calculate customized budget estimate
+  const baseRate = isLuxury ? 35000 : isHoneymoon ? 25000 : isFamily ? 20000 : 15000;
+  const totalMin = baseRate * nights;
+  const totalMax = Math.round(totalMin * 1.5);
+  const budgetStr = `₹${totalMin.toLocaleString('en-IN')}–₹${totalMax.toLocaleString('en-IN')}`;
 
-👑 Ultimate Luxury Escape in ${dest}!
+  const planJson = {
+    destination: "andaman",
+    nights: nights,
+    accommodation: accom,
+    activities: acts,
+    addons: addons
+  };
 
-Day 1–2: Port Blair → Private Villa check-in. Personalized concierge service. Private yacht sunset cruise.
+  let response = `<PLAN_JSON>${JSON.stringify(planJson)}</PLAN_JSON>\n\n${title} (${days} Days / ${nights} Nights)\n\n`;
+  itineraryDays.forEach(day => {
+    response += `Day ${day.d}: ${day.t}\n${day.c}\n\n`;
+  });
+  response += `Estimated Budget: ${budgetStr} for the package.\n\n💡 Tip: All transfers, entry tickets, and ferries are pre-booked for a hassle-free premium experience with Seven Rays.`;
 
-Day 3: Exclusive island tour by speedboat. Gourmet picnic on a private sandbank.
-
-Day 4: PADI scuba diving at world-class reefs. Underwater photography session.
-
-Day 5: Drone videography on Radhanagar Beach. Private spa treatment.
-
-Day 6: Fine dining experience with Chef's tasting menu.
-
-Day 7: Departure with curated souvenir hamper from Seven Rays.
-
-Est. Budget: ₹1,50,000–₹4,00,000/couple
-
-💎 Every detail is personally managed by our luxury concierge team.`;
-  }
-
-  if (isAdventure) {
-    return `<PLAN_JSON>{"destination":"andaman","nights":5,"accommodation":"budget","activities":["scuba","snorkel","seawalk","watersports","kayak","trek"],"addons":["underwater","biolum","guide"]}</PLAN_JSON>
-
-⚡ Ultimate Adventure in ${dest}!
-
-Day 1: Arrival + intro snorkeling at North Bay Island. Sea walk experience.
-
-Day 2: PADI scuba diving certification begins. Pool training + theory.
-
-Day 3: Havelock Island. Open water scuba dive + Elephant Beach. Underwater photography.
-
-Day 4: Rainforest kayaking. Neil Island by speedboat. Bioluminescent beach night walk.
-
-Day 5: Water sports extravaganza (jet ski, parasailing, banana boat). Departure.
-
-Est. Budget: ₹35,000–₹65,000/person
-
-🌊 Andaman has some of Asia's best dive sites — visibility up to 30m!`;
-  }
-
-  // Goa fallback already handled
-
-  // Default response
-  return `🌏 I'd love to help plan your trip to ${dest}!
-
-To create the perfect itinerary, could you tell me:
-• 👥 How many travelers and travelers types? (couple, family, friends)
-• 📅 How many nights are you planning?
-• 💰 What's your approximate budget?
-• 🎭 What experiences interest you most? (adventure, relaxation, culture, nightlife)
-
-Feel free to also use the "Auto Plan" tab — I'll use your builder selections to create a detailed itinerary!`;
+  return response;
 }
 
 /* Built-in auto plan (no API key) */
@@ -1807,10 +1654,6 @@ function renderBuiltinAutoPlan() {
       <div class="ai-plan-day-title">Day ${d.d}: ${d.t}</div>
       <p style="white-space:pre-line">${d.c}</p>
     </div>`).join('')}
-    <div style="margin-top:16px;padding:14px;background:var(--yellow-glow);border-radius:12px;border:1px solid rgba(212,160,23,0.3)">
-      <p style="font-size:0.82rem;color:var(--text-1)">💡 <strong>💎 Add OpenAI key</strong> in the AI panel for a fully customized GPT-4 itinerary based on your exact preferences!</p>
-    </div>
-    <button class="btn btn-outline-dark btn-full" style="margin-top:16px" onclick="window.getMyPlan()">Send This Plan on WhatsApp 🚀</button>
   </div>`;
 }
 
@@ -1861,7 +1704,6 @@ let lbImages = [];
 let lbIdx = 0;
 const lbOverlay = document.getElementById('lightboxOverlay');
 const lbImg = document.getElementById('lbImg');
-const lbCap = document.getElementById('lbCaption');
 
 // Gallery Pagination & Limits
 let activeGalleryFilter = 'all';
@@ -1945,7 +1787,6 @@ function openLb(idx) {
   if (!lbImages.length) return;
   lbIdx = Math.max(0, Math.min(idx, lbImages.length - 1));
   if (lbImg) lbImg.src = lbImages[lbIdx].src;
-  if (lbCap) lbCap.textContent = lbImages[lbIdx].caption;
   if (lbOverlay) lbOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -2422,7 +2263,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setNights(5);
   setBudget(75000);
   recalcPrice();
-  updateAIStatusLabel();
   if (nightsSlider) nightsSlider.style.backgroundSize = '28.5% 100%';
 
   fetchExchangeRates();
